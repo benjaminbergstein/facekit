@@ -1,0 +1,51 @@
+html
+  head
+    title Facekit
+    link href="bulma.css" type="text/css" rel="stylesheet"
+    link href="style.css" type="text/css" rel="stylesheet"
+
+  body
+    section.section
+      .container
+        h1.title.is-1 Facekit
+        h2.subtitle Interactive views without writing javascript.
+
+        p Facekit is a front-end toolkit influenced by Rails's Unobtrusive Javascript (UJS) library. It includes code to bring the essential interactive views to life and sits on any CSS framework.
+
+    section.section
+      .container
+        h3.title.is-2 Panel
+
+        .panel data-panel-view=''
+          .panel-heading.pointer data-panel-view-toggle=''
+            ' Panel
+
+          .panel-block data-panel-view-body=''
+            ' This panel is toggleable. Click on the header to toggle.
+
+        hr
+
+        h3.title.is-2 Tabs
+
+        div data-tab-view=''
+          .tabs
+            ul
+              li.is-active data-tab-view-control=''
+                a Pictures
+              li data-tab-view-control=''
+                a Something
+
+          div data-tab-view-pane='' data-controlled-by='Pictures'
+            ' This is the pictures tab
+
+          .is-hidden data-tab-view-pane='' data-controlled-by='Something'
+            ' This is the something
+
+    javascript:
+      window.doInitializeViews = true;
+
+    script src='/facekit.js' type='text/javascript'
+
+    javascript:
+      Facekit.classNames.hidden = 'is-hidden';
+      Facekit.classNames.active = 'is-active';

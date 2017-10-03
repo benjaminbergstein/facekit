@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+stubborn build
+browserify src/index.js --outfile dist/facekit.js

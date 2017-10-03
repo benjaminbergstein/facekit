@@ -7,39 +7,76 @@ html
   body
     section.section
       .container
-        h1.title.is-1 Facekit
-        h2.subtitle Interactive views without writing javascript.
+        .columns
+          .column.is-4
+            .columns
+              .column.is-8.is-offset-1
+                h1.title.is-1 Facekit
+                h2.subtitle Interactive views without writing javascript.
 
-        p Facekit is a front-end toolkit influenced by Rails's Unobtrusive Javascript (UJS) library. It includes code to bring the essential interactive views to life and sits on any CSS framework.
+                p Facekit is a front-end toolkit influenced by Rails's Unobtrusive Javascript (UJS) library. It includes code to bring the essential interactive views to life and sits on any CSS framework.
 
-    section.section
-      .container
-        h3.title.is-2 Panel
+          .column
+            h2.title Components
 
-        .panel data-panel-view=''
-          .panel-heading.pointer data-panel-view-toggle=''
-            ' Panel
+            div data-tab-view=''
+              .tabs
+                ul
+                  li.is-active data-tab-view-control=''
+                    a data-forward-event='focus => click' href='javascript:void(0)' Toggled Panel
+                  li data-tab-view-control=''
+                    a data-forward-event='focus => click' href='javascript:void(0)' Basic Tabs
+                  li data-tab-view-control=''
+                    a data-forward-event='focus => click' href='javascript:void(0)' Sidebar Tabs
 
-          .panel-block data-panel-view-body=''
-            ' This panel is toggleable. Click on the header to toggle.
+              div data-tab-view-pane='' data-controlled-by='Toggled Panel'
+                h3.title.is-2 Toggled Panel
 
-        hr
+                .panel data-panel-view=''
+                  .panel-heading.pointer data-panel-view-toggle=''
+                    ' Panel
 
-        h3.title.is-2 Tabs
+                  .panel-block data-panel-view-body=''
+                    ' This panel is toggleable. Click on the header to toggle.
 
-        div data-tab-view=''
-          .tabs
-            ul
-              li.is-active data-tab-view-control=''
-                a Pictures
-              li data-tab-view-control=''
-                a Something
+              .is-hidden data-tab-view-pane='' data-controlled-by='Basic Tabs'
+                h3.title.is-2 Basic Tabs
 
-          div data-tab-view-pane='' data-controlled-by='Pictures'
-            ' This is the pictures tab
+                div data-tab-view=''
+                  .tabs
+                    ul
+                      li.is-active data-tab-view-control=''
+                        a data-forward-event='focus => click' href='javascript:void(0)' Pictures
+                      li data-tab-view-control=''
+                        a data-forward-event='focus => click' href='javascript:void(0)' Something
 
-          .is-hidden data-tab-view-pane='' data-controlled-by='Something'
-            ' This is the something
+                  div data-tab-view-pane='' data-controlled-by='Pictures'
+                    ' This is the pictures tab
+
+                  .is-hidden data-tab-view-pane='' data-controlled-by='Something'
+                    ' This is the something
+
+              .is-hidden data-tab-view-pane='' data-controlled-by='Sidebar Tabs'
+                h3.title.is-2 Sidebar Tabs
+
+                div data-tab-view='' data-enable-cycling=''
+                  .columns
+                    .column.is-4
+                      .panel
+                        .panel-heading Sidebar
+                        a.panel-block.is-active data-tab-view-control='' data-forward-event='focus => click' href='javascript:void(0)' Basics
+                        a.panel-block data-tab-view-control='' data-forward-event='focus => click' href='javascript:void(0)' Advanced
+                        a.panel-block data-tab-view-control='' data-forward-event='focus => click' href='javascript:void(0)' Really Advanced
+
+                    .column
+                      div data-tab-view-pane='' data-controlled-by='Basics'
+                        ' Click on the "Advanced" tab to the left!
+
+                      .is-hidden data-tab-view-pane='' data-controlled-by='Advanced'
+                        ' Now press the down key!
+
+                      .is-hidden data-tab-view-pane='' data-controlled-by='Really Advanced'
+                        ' Press the down key again if this is too advanced for you.
 
     javascript:
       window.doInitializeViews = true;

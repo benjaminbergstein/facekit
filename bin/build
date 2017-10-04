@@ -2,3 +2,4 @@
 
 stubborn build
 browserify src/index.js --outfile dist/facekit.js
+cp dist/facekit.js docs/facekit.js

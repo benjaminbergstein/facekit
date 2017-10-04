@@ -1,9 +1,10 @@
 html
   head
     title Facekit
-    link href="bulma.css" type="text/css" rel="stylesheet"
-    link href="github.css" type="text/css" rel="stylesheet"
-    link href="style.css" type="text/css" rel="stylesheet"
+    link href="css/bulma.css" type="text/css" rel="stylesheet"
+    link href="css/font-awesome.css" type="text/css" rel="stylesheet"
+    link href="css/github.css" type="text/css" rel="stylesheet"
+    link href="css/style.css" type="text/css" rel="stylesheet"
 
   body data-tab-view=true
     section.hero.is-light
@@ -13,9 +14,14 @@ html
           h2.subtitle Interactive views without writing javascript.
 
           .columns
-            .column.is-4
+            .column.is-4.content
               p
                 ' Facekit is a <strong>front-end toolkit</strong> influenced by Rails's Unobtrusive Javascript (UJS) library. It includes <strong>code</strong> to bring the <strong>essential interactive views</strong> to life and sits on any CSS framework.
+
+              p
+                a href='https://github.com/benjaminbergstein/facekit'
+                  span class="icon"
+                    i class="fa fa-lg fa-github"
 
       .hero-foot
         .container
@@ -80,8 +86,8 @@ html
     javascript:
       window.doInitializeViews = true;
 
-    script src='highlight.pack.js' type='text/javascript'
-    script src='facekit.js' type='text/javascript'
+    script src='js/highlight.pack.js' type='text/javascript'
+    script src='js/facekit.js' type='text/javascript'
 
     javascript:
       Facekit.classNames.hidden = 'is-hidden';

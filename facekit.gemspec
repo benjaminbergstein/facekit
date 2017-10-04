@@ -9,8 +9,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Benjamin Bergstein"]
   spec.email         = ["bennyjbergstein@gmail.com"]
 
-  spec.summary       = %q{TODO: Write a short summary, because Rubygems requires one.}
-  spec.description   = %q{TODO: Write a longer description or delete this line.}
+  spec.summary       = "Interactive views without writing javascript."
   spec.homepage      = "TODO: Put your gem's website or public repo URL here."
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'

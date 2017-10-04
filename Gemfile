@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
 
 # Specify your gem's dependencies in facekit.gemspec
-gem 'stubborn', github: 'americanmaverick/stubborn'
+gem 'stubborn', github: 'benjaminbergstein/stubborn'
 gemspec

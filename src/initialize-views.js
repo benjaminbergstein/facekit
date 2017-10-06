@@ -1,10 +1,11 @@
 var forEach = require('./for-each'),
     dispatchEvent = require('./dispatch-event');
 
-function initializeView(target, viewClass, parent, scope, parentTarget) {
-  var viewInstance, possibleParents, respondingParent;
+function initializeView(target, viewClass, parent, parentTarget, selector) {
+  var scope, viewInstance, possibleParents, respondingParent;
   
   if (parent) {
+    scope = parent.initializedWith;
     possibleParents = document.querySelectorAll(scope);
     forEach(possibleParents, function(parent) {
       parent.addEventListener('parent:searching', function(e) {
@@ -18,6 +19,7 @@ function initializeView(target, viewClass, parent, scope, parentTarget) {
   }
   
   viewInstance = new viewClass(target, parent);
+  viewInstance.initializedWith = selector;
   viewInstance.render();
   return viewInstance;
 }
@@ -34,7 +36,7 @@ function initializeViews(selector, viewClass, options) {
   initializedViews = [];
   forEach(viewTargets, function(target) {
     var viewInstance;
-    viewInstance = initializeView(target, viewClass, parent, scope, parentTarget);
+    viewInstance = initializeView(target, viewClass, parent, parentTarget, selector);
     
     if (viewInstance) {
       initializedViews.push(viewInstance);

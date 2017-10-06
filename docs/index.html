@@ -39,6 +39,9 @@
                 <a href="javascript:void(0)">Basic Tabs</a>
               </li>
               <li data-tab-view-control="">
+                <a href="javascript:void(0)">Dismiss</a>
+              </li>
+              <li data-tab-view-control="">
                 <a href="javascript:void(0)">Sidebar Tabs</a>
               </li>
             </ul>
@@ -48,7 +51,7 @@
     </section>
     <div class="container is-fluid">
       <section class="section">
-        <div data-controlled-by="Toggled Panel" data-tab-view-pane=""><div class='columns'><div class='column is-half'><div class='box'><div>
+        <div data-controlled-by="Toggled Panel" data-tab-view-pane=""><div class='columns'><div class='column is-half'><div><span class='tag is-primary' style="position: relative; top: 3px; left: 8px">Example</span></div><div class='box'><div>
           <div class="panel" data-panel-view="">
             <div class="panel-heading pointer" data-panel-view-toggle="">
               Panel 
@@ -58,21 +61,19 @@
                 This panel is toggleable. Click on the header to toggle.
               </p>
             </div>
-          </div></div>
-</div></div><div class='column is-half'><div><pre class='is-marginless'><code class='html is-paddingless is-marginless'>
-&lt;div class="panel" data-panel-view=""&gt;
-  &lt;div class="panel-heading pointer" data-panel-view-toggle=""&gt;
+          </div></div></div></div><div class='column is-half'><div><span class='tag' style="position: relative; top: 3px; left: 8px">Code</span></div><div><pre class='is-marginless'><code class='html is-paddingless is-marginless'>
+&lt;div class="panel" data-panel-view&gt;
+  &lt;div class="panel-heading pointer" data-panel-view-toggle&gt;
     Panel 
   &lt;/div&gt;
-  &lt;div class="panel-block" data-panel-view-body=""&gt;
+  &lt;div class="panel-block" data-panel-view-body&gt;
     &lt;p&gt;
       This panel is toggleable. Click on the header to toggle.
     &lt;/p&gt;
   &lt;/div&gt;
-&lt;/div&gt;</code></pre></div>
-</div></div>
+&lt;/div&gt;</code></pre></div></div></div>
         </div>
-        <div class="is-hidden" data-controlled-by="Basic Tabs" data-tab-view-pane=""><div class='columns'><div class='column is-half'><div class='box'><div>
+        <div class="is-hidden" data-controlled-by="Basic Tabs" data-tab-view-pane=""><div class='columns'><div class='column is-half'><div><span class='tag is-primary' style="position: relative; top: 3px; left: 8px">Example</span></div><div class='box'><div>
           <div data-tab-view="">
             <div class="tabs">
               <ul>
@@ -94,33 +95,55 @@
                 This is the second tab. With not much luck, it contains even more interesting information than does tab 1.
               </p>
             </div>
-          </div></div>
-</div></div><div class='column is-half'><div><pre class='is-marginless'><code class='html is-paddingless is-marginless'>
-&lt;div data-tab-view=""&gt;
+          </div></div></div></div><div class='column is-half'><div><span class='tag' style="position: relative; top: 3px; left: 8px">Code</span></div><div><pre class='is-marginless'><code class='html is-paddingless is-marginless'>
+&lt;div data-tab-view&gt;
   &lt;div class="tabs"&gt;
     &lt;ul&gt;
-      &lt;li class="is-active" data-tab-view-control=""&gt;
+      &lt;li class="is-active" data-tab-view-control&gt;
         &lt;a href="javascript:void(0)"&gt;Tab 1&lt;/a&gt;
       &lt;/li&gt;
-      &lt;li data-tab-view-control=""&gt;
+      &lt;li data-tab-view-control&gt;
         &lt;a href="javascript:void(0)"&gt;Tab 2&lt;/a&gt;
       &lt;/li&gt;
     &lt;/ul&gt;
   &lt;/div&gt;
-  &lt;div data-controlled-by="Tab 1" data-tab-view-pane=""&gt;
+  &lt;div data-controlled-by="Tab 1" data-tab-view-pane&gt;
     &lt;p&gt;
       This is the the first tab. With any luck, it contains something very interesting.
     &lt;/p&gt;
   &lt;/div&gt;
-  &lt;div class="is-hidden" data-controlled-by="Tab 2" data-tab-view-pane=""&gt;
+  &lt;div class="is-hidden" data-controlled-by="Tab 2" data-tab-view-pane&gt;
     &lt;p&gt;
       This is the second tab. With not much luck, it contains even more interesting information than does tab 1.
     &lt;/p&gt;
   &lt;/div&gt;
-&lt;/div&gt;</code></pre></div>
-</div></div>
+&lt;/div&gt;</code></pre></div></div></div>
         </div>
-        <div class="is-hidden" data-controlled-by="Sidebar Tabs" data-tab-view-pane=""><div class='columns'><div class='column is-half'><div class='box'><div>
+        <div class="is-hidden" data-controlled-by="Dismiss" data-tab-view-pane=""><div class='columns'><div class='column is-half'><div><span class='tag is-primary' style="position: relative; top: 3px; left: 8px">Example</span></div><div class='box'><div>
+          <div class="message" data-dismiss-view="">
+            <div class="message-header">
+              Dismiss <span class="delete" data-dismiss-control=""></span>
+            </div>
+            <div class="message-body">
+              Body
+            </div>
+          </div>
+          <div class="notification" data-dismiss-view="">
+            <button class="delete" data-dismiss-control=""></button>Notification Body 
+          </div></div></div></div><div class='column is-half'><div><span class='tag' style="position: relative; top: 3px; left: 8px">Code</span></div><div><pre class='is-marginless'><code class='html is-paddingless is-marginless'>
+&lt;div class="message" data-dismiss-view&gt;
+  &lt;div class="message-header"&gt;
+    Dismiss &lt;span class="delete" data-dismiss-control&gt;&lt;/span&gt;
+  &lt;/div&gt;
+  &lt;div class="message-body"&gt;
+    Body
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="notification" data-dismiss-view&gt;
+  &lt;button class="delete" data-dismiss-control&gt;&lt;/button&gt;Notification Body 
+&lt;/div&gt;</code></pre></div></div></div>
+        </div>
+        <div class="is-hidden" data-controlled-by="Sidebar Tabs" data-tab-view-pane=""><div class='columns'><div class='column is-half'><div><span class='tag is-primary' style="position: relative; top: 3px; left: 8px">Example</span></div><div class='box'><div>
           <div data-enable-cycling="" data-tab-view="">
             <div class="columns">
               <div class="column is-4">
@@ -143,32 +166,30 @@
                 </div>
               </div>
             </div>
-          </div></div>
-</div></div><div class='column is-half'><div><pre class='is-marginless'><code class='html is-paddingless is-marginless'>
-&lt;div data-enable-cycling="" data-tab-view=""&gt;
+          </div></div></div></div><div class='column is-half'><div><span class='tag' style="position: relative; top: 3px; left: 8px">Code</span></div><div><pre class='is-marginless'><code class='html is-paddingless is-marginless'>
+&lt;div data-enable-cycling data-tab-view&gt;
   &lt;div class="columns"&gt;
     &lt;div class="column is-4"&gt;
       &lt;div class="panel"&gt;
         &lt;div class="panel-heading"&gt;
           Sidebar
         &lt;/div&gt;
-        &lt;a class="panel-block is-active" data-forward-event="focus =&gt; click" data-tab-view-control="" href="javascript:void(0)"&gt;Basics&lt;/a&gt;&lt;a class="panel-block" data-forward-event="focus =&gt; click" data-tab-view-control="" href="javascript:void(0)"&gt;Advanced&lt;/a&gt;&lt;a class="panel-block" data-forward-event="focus =&gt; click" data-tab-view-control="" href="javascript:void(0)"&gt;Really Advanced&lt;/a&gt;
+        &lt;a class="panel-block is-active" data-forward-event="focus =&gt; click" data-tab-view-control href="javascript:void(0)"&gt;Basics&lt;/a&gt;&lt;a class="panel-block" data-forward-event="focus =&gt; click" data-tab-view-control href="javascript:void(0)"&gt;Advanced&lt;/a&gt;&lt;a class="panel-block" data-forward-event="focus =&gt; click" data-tab-view-control href="javascript:void(0)"&gt;Really Advanced&lt;/a&gt;
       &lt;/div&gt;
     &lt;/div&gt;
     &lt;div class="column"&gt;
-      &lt;div data-controlled-by="Basics" data-tab-view-pane=""&gt;
+      &lt;div data-controlled-by="Basics" data-tab-view-pane&gt;
         Click on the "Advanced" tab to the left! 
       &lt;/div&gt;
-      &lt;div class="is-hidden" data-controlled-by="Advanced" data-tab-view-pane=""&gt;
+      &lt;div class="is-hidden" data-controlled-by="Advanced" data-tab-view-pane&gt;
         Now press the down key! 
       &lt;/div&gt;
-      &lt;div class="is-hidden" data-controlled-by="Really Advanced" data-tab-view-pane=""&gt;
+      &lt;div class="is-hidden" data-controlled-by="Really Advanced" data-tab-view-pane&gt;
         Press the down key again if this is too advanced for you. 
       &lt;/div&gt;
     &lt;/div&gt;
   &lt;/div&gt;
-&lt;/div&gt;</code></pre></div>
-</div></div>
+&lt;/div&gt;</code></pre></div></div></div>
         </div>
       </section>
     </div>

@@ -16,7 +16,7 @@ TabView.prototype.render = function() {
   var tabView, optionsForSubview;
   tabView = this;
   
-  optionsForSubview = { parent: tabView, scope: '[data-tab-view]' };
+  optionsForSubview = { parent: tabView };
   this.panes = initializeViews('[data-tab-view-pane]', TabView.Pane, optionsForSubview);
   this.tabViewControls = initializeViews('[data-tab-view-control]', TabView.Control, optionsForSubview);
   
@@ -44,7 +44,11 @@ TabView.prototype.resetPanes = function(options) {
   if (!options) options = {};
   visiblePane = options.visible;
   forEach(this.panes, function(pane) {
-    pane.target.classList.toggle(classNames.hidden, pane !== visiblePane);
+    if (pane !== visiblePane) {
+      pane.target.classList.add(classNames.hidden);
+    } else {
+      pane.target.classList.remove(classNames.hidden);
+    }
   });
 };
 
@@ -52,8 +56,19 @@ TabView.prototype.resetControls = function(options) {
   var activeControl;
   if (!options) options = {};
   activeControl = options.active;
+  global.log = [];
   forEach(this.tabViewControls, function(control) {
-    control.target.classList.toggle(classNames.active, control === activeControl);
+    global.log.push([
+      control.target.innerText,
+      activeControl.target.innerText,
+      control === activeControl
+    ]);
+    
+    if (control === activeControl) {
+      control.target.classList.add(classNames.active);
+    } else {
+      control.target.classList.remove(classNames.active);
+    }
   });
 };
 

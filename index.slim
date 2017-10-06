@@ -32,6 +32,8 @@ html
               li data-tab-view-control=true
                 a href='javascript:void(0)' Basic Tabs
               li data-tab-view-control=true
+                a href='javascript:void(0)' Dismiss
+              li data-tab-view-control=true
                 a href='javascript:void(0)' Sidebar Tabs
 
     .container.is-fluid
@@ -61,6 +63,19 @@ html
 
               .is-hidden data-tab-view-pane=true data-controlled-by='Tab 2'
                 p This is the second tab. With not much luck, it contains even more interesting information than does tab 1.
+
+
+        .is-hidden data-tab-view-pane=true data-controlled-by='Dismiss'
+          == example do
+            .message data-dismiss-view=true
+              .message-header
+                ' Dismiss
+                span.delete data-dismiss-control=true
+              .message-body Body
+
+            .notification data-dismiss-view=true
+              button.delete data-dismiss-control=true
+              ' Notification Body
 
         .is-hidden data-tab-view-pane=true data-controlled-by='Sidebar Tabs'
           == example do

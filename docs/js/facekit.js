@@ -128,7 +128,7 @@ Facekit.PanelView = require('./panel-view');
 Facekit.TabView = require('./tab-view');
 
 module.exports = Facekit;
-},{"./class-names":1,"./dismiss-view":3,"./forward-event-view":6,"./initialize-views":8,"./modal-view":9,"./panel-view":10,"./tab-view":13}],8:[function(require,module,exports){
+},{"./class-names":1,"./dismiss-view":3,"./forward-event-view":6,"./initialize-views":8,"./modal-view":10,"./panel-view":11,"./tab-view":14}],8:[function(require,module,exports){
 var forEach = require('./for-each'),
     dispatchEvent = require('./dispatch-event');
 
@@ -179,16 +179,13 @@ function initializeViews(selector, viewClass, options) {
 
 module.exports = initializeViews;
 },{"./dispatch-event":4,"./for-each":5}],9:[function(require,module,exports){
-(function (global){
-var initializeViews = require('./initialize-views');
-
-function Control(target, parent) {
+function ModalControl(target, parent) {
   this.target = target;
   this.parent = parent;
   this.action = this.target.dataset.modalViewControl;
 }
 
-Control.prototype.render = function() {
+ModalControl.prototype.render = function() {
   var control;
   control = this;
   
@@ -201,13 +198,19 @@ Control.prototype.render = function() {
   });
 };
 
-Control.prototype.activate = function() {
+ModalControl.prototype.activate = function() {
   this.target.classList.add('is-active');
 };
 
-Control.prototype.deactivate = function() {
+ModalControl.prototype.deactivate = function() {
   this.target.classList.remove('is-active');
 };
+
+module.exports = ModalControl;
+},{}],10:[function(require,module,exports){
+(function (global){
+var initializeViews = require('../initialize-views'),
+    ModalControl = require('./control');
 
 function ModalView(target) {
   this.target = target;
@@ -216,8 +219,8 @@ function ModalView(target) {
 ModalView.prototype.render = function() {
   var subviewOptions;
   subviewOptions = { parent: this };
-  initializeViews('[data-modal-view-control]', Control, subviewOptions);
-  this.subjects = initializeViews('[data-modal-view-subject]', Control, subviewOptions);
+  initializeViews('[data-modal-view-control]', ModalControl, subviewOptions);
+  this.subjects = initializeViews('[data-modal-view-subject]', ModalControl, subviewOptions);
 };
 
 ModalView.prototype.activate = function() {
@@ -235,7 +238,7 @@ if (global.doInitializeViews) {
 module.exports = ModalView;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./initialize-views":8}],10:[function(require,module,exports){
+},{"../initialize-views":8,"./control":9}],11:[function(require,module,exports){
 (function (global){
 var initializeViews = require('./initialize-views');
 var classNames = require('./class-names');
@@ -268,7 +271,7 @@ if (global.doInitializeViews) {
 module.exports = PanelView;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./class-names":1,"./initialize-views":8}],11:[function(require,module,exports){
+},{"./class-names":1,"./initialize-views":8}],12:[function(require,module,exports){
 function Pane(target, parent) {
   this.target = target;
   this.parent = parent;
@@ -279,7 +282,7 @@ Pane.prototype.render = function() {
 };
 
 module.exports = Pane;
-},{}],12:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 var forEach = require('../for-each');
 
 var Control = function TabViewControl(target, parent) {
@@ -341,7 +344,7 @@ Control.prototype.isActive = function(labelText) {
 
 module.exports = Control;
 
-},{"../for-each":5}],13:[function(require,module,exports){
+},{"../for-each":5}],14:[function(require,module,exports){
 (function (global){
 var forEach = require('../for-each'),
     CyclingView = require('../cycling-view'),
@@ -428,4 +431,4 @@ if (global.doInitializeViews) {
 module.exports = TabView;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../class-names":1,"../cycling-view":2,"../dispatch-event":4,"../for-each":5,"../initialize-views":8,"./Pane.js":11,"./control.js":12}]},{},[7]);
+},{"../class-names":1,"../cycling-view":2,"../dispatch-event":4,"../for-each":5,"../initialize-views":8,"./Pane.js":12,"./control.js":13}]},{},[7]);

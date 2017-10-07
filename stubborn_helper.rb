@@ -25,7 +25,6 @@ def example
   tag('.columns'){[example_html, code_html]}
 end
 
-
 def tag(representation, content = nil, **additional_attributes)
   matches = representation.to_s.match(/([^#^.]+)?(#[^\.]+)?(\..+)?/)
   tag = matches[1] || 'div'

@@ -118,15 +118,17 @@ module.exports = ForwardEventView;
 },{"./dispatch-event":4,"./initialize-views":8}],7:[function(require,module,exports){
 Facekit = {};
 
-Facekit.DismissView = require('./dismiss-view');
-Facekit.TabView = require('./tab-view');
-Facekit.PanelView = require('./panel-view');
-Facekit.ForwardEventView = require('./forward-event-view');
 Facekit.initializeViews = require('./initialize-views');
 Facekit.classNames = require('./class-names');
 
+Facekit.DismissView = require('./dismiss-view');
+Facekit.ForwardEventView = require('./forward-event-view');
+Facekit.ModalView = require('./modal-view');
+Facekit.PanelView = require('./panel-view');
+Facekit.TabView = require('./tab-view');
+
 module.exports = Facekit;
-},{"./class-names":1,"./dismiss-view":3,"./forward-event-view":6,"./initialize-views":8,"./panel-view":9,"./tab-view":12}],8:[function(require,module,exports){
+},{"./class-names":1,"./dismiss-view":3,"./forward-event-view":6,"./initialize-views":8,"./modal-view":9,"./panel-view":10,"./tab-view":13}],8:[function(require,module,exports){
 var forEach = require('./for-each'),
     dispatchEvent = require('./dispatch-event');
 
@@ -179,6 +181,63 @@ module.exports = initializeViews;
 },{"./dispatch-event":4,"./for-each":5}],9:[function(require,module,exports){
 (function (global){
 var initializeViews = require('./initialize-views');
+
+function Control(target, parent) {
+  this.target = target;
+  this.parent = parent;
+  this.action = this.target.dataset.modalViewControl;
+}
+
+Control.prototype.render = function() {
+  var control;
+  control = this;
+  
+  control.target.addEventListener('click', function() {
+    if (control.action == 'deactivate') {
+      control.parent.deactivate();
+    } else if (control.action == 'activate') {
+      control.parent.activate();
+    }
+  });
+};
+
+Control.prototype.activate = function() {
+  this.target.classList.add('is-active');
+};
+
+Control.prototype.deactivate = function() {
+  this.target.classList.remove('is-active');
+};
+
+function ModalView(target) {
+  this.target = target;
+}
+
+ModalView.prototype.render = function() {
+  var subviewOptions;
+  subviewOptions = { parent: this };
+  initializeViews('[data-modal-view-control]', Control, subviewOptions);
+  this.subjects = initializeViews('[data-modal-view-subject]', Control, subviewOptions);
+};
+
+ModalView.prototype.activate = function() {
+  this.subjects[0].activate();
+};
+
+ModalView.prototype.deactivate = function() {
+  this.subjects[0].deactivate();
+};
+
+if (global.doInitializeViews) {
+  initializeViews('[data-modal-view]', ModalView);
+}
+
+module.exports = ModalView;
+
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{"./initialize-views":8}],10:[function(require,module,exports){
+(function (global){
+var initializeViews = require('./initialize-views');
 var classNames = require('./class-names');
 
 function PanelView(target) {
@@ -209,7 +268,7 @@ if (global.doInitializeViews) {
 module.exports = PanelView;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./class-names":1,"./initialize-views":8}],10:[function(require,module,exports){
+},{"./class-names":1,"./initialize-views":8}],11:[function(require,module,exports){
 function Pane(target, parent) {
   this.target = target;
   this.parent = parent;
@@ -220,7 +279,7 @@ Pane.prototype.render = function() {
 };
 
 module.exports = Pane;
-},{}],11:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 var forEach = require('../for-each');
 
 var Control = function TabViewControl(target, parent) {
@@ -282,7 +341,7 @@ Control.prototype.isActive = function(labelText) {
 
 module.exports = Control;
 
-},{"../for-each":5}],12:[function(require,module,exports){
+},{"../for-each":5}],13:[function(require,module,exports){
 (function (global){
 var forEach = require('../for-each'),
     CyclingView = require('../cycling-view'),
@@ -369,4 +428,4 @@ if (global.doInitializeViews) {
 module.exports = TabView;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../class-names":1,"../cycling-view":2,"../dispatch-event":4,"../for-each":5,"../initialize-views":8,"./Pane.js":10,"./control.js":11}]},{},[7]);
+},{"../class-names":1,"../cycling-view":2,"../dispatch-event":4,"../for-each":5,"../initialize-views":8,"./Pane.js":11,"./control.js":12}]},{},[7]);

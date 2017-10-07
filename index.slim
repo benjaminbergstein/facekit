@@ -34,6 +34,8 @@ html
               li data-tab-view-control=true
                 a href='javascript:void(0)' Dismiss
               li data-tab-view-control=true
+                a href='javascript:void(0)' Modal
+              li data-tab-view-control=true
                 a href='javascript:void(0)' Sidebar Tabs
 
     .container.is-fluid
@@ -64,6 +66,22 @@ html
               .is-hidden data-tab-view-pane=true data-controlled-by='Tab 2'
                 p This is the second tab. With not much luck, it contains even more interesting information than does tab 1.
 
+        .is-hidden data-tab-view-pane=true data-controlled-by='Modal'
+          == example do
+            div data-modal-view=true
+
+              button.button data-modal-view-control='activate' Launch Modal
+
+              .modal data-modal-view-subject=true
+                .modal-background data-modal-view-control="deactivate"
+                .modal-content
+                  .box
+                    .content
+                      h1 Modal
+
+                      p This modal is truly amazing.
+
+                button.modal-close.is-large data-modal-view-control="deactivate" aria-label="close"
 
         .is-hidden data-tab-view-pane=true data-controlled-by='Dismiss'
           == example do

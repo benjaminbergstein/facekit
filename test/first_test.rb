@@ -58,6 +58,18 @@ class FirstTest < MiniTest::Test
     end
   end
 
+  def test_modal
+    visit '/'
+    click_on 'Modal'
+    
+    within_example do
+      click_on 'Launch Modal'
+      assert_equal(true, page.has_css?('.modal', text: 'Modal This modal is truly amazing.'))
+      find('.modal-close').click
+      assert_equal(false, page.has_css?('.modal', text: 'Modal This modal is truly amazing.'))
+    end
+  end
+  
   def save_screen
     f = File.open('docs/screen.html', 'wb+')
     f.write(page.html)

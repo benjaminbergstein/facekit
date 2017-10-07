@@ -42,6 +42,9 @@
                 <a href="javascript:void(0)">Dismiss</a>
               </li>
               <li data-tab-view-control="">
+                <a href="javascript:void(0)">Modal</a>
+              </li>
+              <li data-tab-view-control="">
                 <a href="javascript:void(0)">Sidebar Tabs</a>
               </li>
             </ul>
@@ -116,6 +119,46 @@
     &lt;p&gt;
       This is the second tab. With not much luck, it contains even more interesting information than does tab 1.
     &lt;/p&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre></div></div></div>
+        </div>
+        <div class="is-hidden" data-controlled-by="Modal" data-tab-view-pane=""><div class='columns'><div class='column is-half'><div><span class='tag is-primary' style="position: relative; top: 3px; left: 8px">Example</span></div><div class='box'><div>
+          <div data-modal-view="">
+            <button class="button" data-modal-view-control="activate">Launch Modal</button>
+            <div class="modal" data-modal-view-subject="">
+              <div class="modal-background" data-modal-view-control="deactivate"></div>
+              <div class="modal-content">
+                <div class="box">
+                  <div class="content">
+                    <h1>
+                      Modal
+                    </h1>
+                    <p>
+                      This modal is truly amazing.
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <button aria-label="close" class="modal-close is-large" data-modal-view-control="deactivate"></button>
+            </div>
+          </div></div></div></div><div class='column is-half'><div><span class='tag' style="position: relative; top: 3px; left: 8px">Code</span></div><div><pre class='is-marginless'><code class='html is-paddingless is-marginless'>
+&lt;div data-modal-view&gt;
+  &lt;button class="button" data-modal-view-control="activate"&gt;Launch Modal&lt;/button&gt;
+  &lt;div class="modal" data-modal-view-subject&gt;
+    &lt;div class="modal-background" data-modal-view-control="deactivate"&gt;&lt;/div&gt;
+    &lt;div class="modal-content"&gt;
+      &lt;div class="box"&gt;
+        &lt;div class="content"&gt;
+          &lt;h1&gt;
+            Modal
+          &lt;/h1&gt;
+          &lt;p&gt;
+            This modal is truly amazing.
+          &lt;/p&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;button aria-label="close" class="modal-close is-large" data-modal-view-control="deactivate"&gt;&lt;/button&gt;
   &lt;/div&gt;
 &lt;/div&gt;</code></pre></div></div></div>
         </div>

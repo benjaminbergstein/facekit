@@ -13,7 +13,7 @@ end
 
 `bundle exec build`
 
-class FirstTest < MiniTest::Test
+class FacekitTest < MiniTest::Test
   include Capybara::DSL
   
   def test_toggling_panel

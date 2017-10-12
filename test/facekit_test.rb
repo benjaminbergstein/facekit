@@ -70,6 +70,19 @@ class FacekitTest < MiniTest::Test
     end
   end
   
+  def test_dropdown
+    visit '/'
+    click_on 'Dropdown'
+    
+    within_example do
+      assert_equal(false, page.has_css?('.dropdown-content', text: 'Dropdown Content'))
+      click_on 'Toggle Dropdown'
+      assert_equal(true, page.has_css?('.dropdown-content', text: 'Dropdown Content'))
+      click_on 'Toggle Dropdown'
+      assert_equal(false, page.has_css?('.dropdown-content', text: 'Dropdown Content'))
+    end
+  end
+  
   def save_screen
     f = File.open('docs/screen.html', 'wb+')
     f.write(page.html)

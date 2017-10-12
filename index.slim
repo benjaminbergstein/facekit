@@ -36,6 +36,8 @@ html
               li data-tab-view-control=true
                 a href='javascript:void(0)' Modal
               li data-tab-view-control=true
+                a href='javascript:void(0)' Dropdown
+              li data-tab-view-control=true
                 a href='javascript:void(0)' Sidebar Tabs
 
     .container.is-fluid
@@ -115,6 +117,20 @@ html
 
                   .is-hidden data-tab-view-pane=true data-controlled-by='Really Advanced'
                     ' Press the down key again if this is too advanced for you.
+
+        .is-hidden data-tab-view-pane=true data-controlled-by='Dropdown'
+          == example do
+            div class="dropdown" data-dropdown-view=""
+              div class="dropdown-trigger" data-dropdown-view-control=""
+                button class="button" aria-haspopup="true" aria-controls="dropdown-menu"
+                  span Toggle Dropdown
+                  span class="icon is-small"
+                    i class="fa fa-angle-down" aria-hidden="true"
+
+              div class="dropdown-menu" id="dropdown-menu" role="menu"
+                div class="dropdown-content"
+                  a href="javascript:void(0)" class="dropdown-item"
+                    ' Dropdown Content
 
     javascript:
       window.doInitializeViews = true;

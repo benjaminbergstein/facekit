@@ -62,7 +62,7 @@ if (global.doInitializeViews) {
 module.exports = DismissView;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./initialize-views":8}],4:[function(require,module,exports){
+},{"./initialize-views":10}],4:[function(require,module,exports){
 function dispatchEvent(target, eventType, options) {
   // CustomEvent is not available in phantomjs v1.9.8, and file uploads down work with v2+.
   if (typeof CustomEvent === 'function') {
@@ -78,6 +78,56 @@ function dispatchEvent(target, eventType, options) {
 module.exports = dispatchEvent;
 
 },{}],5:[function(require,module,exports){
+function Control(target, parent) {
+  this.target = target;
+  this.parent = parent;
+}
+
+Control.prototype.render = function() {
+  var control;
+  control = this;
+  control.target.addEventListener('click', function() {
+    control.parent.toggle();
+  });
+};
+
+module.exports = Control;
+
+},{}],6:[function(require,module,exports){
+(function (global){
+var initializeViews = require('../initialize-views'),
+    classNames = require('../class-names');
+
+function DropdownView(target) {
+  this.target = target;
+}
+
+DropdownView.Control = require('./control');
+
+DropdownView.prototype.render = function() {
+  initializeViews('[data-dropdown-view-control]', DropdownView.Control, { parent: this });
+};
+
+DropdownView.prototype.toggle = function(force) {
+  var active, classList;
+  classList = this.target.classList;
+  active = classList.contains(classNames.active);
+  
+  if (active || force === false) {
+    classList.remove(classNames.active);
+  } else {
+    classList.add(classNames.active);
+  }
+};
+
+if (global.doInitializeViews) {
+  initializeViews('[data-dropdown-view]', DropdownView);
+}
+
+module.exports = DropdownView;
+
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{"../class-names":1,"../initialize-views":10,"./control":5}],7:[function(require,module,exports){
 function forEach(collection, callback) {
   var i, ii;
   for (i = 0, ii = collection.length; i < ii; i++) {
@@ -87,7 +137,7 @@ function forEach(collection, callback) {
 
 module.exports = forEach;
 
-},{}],6:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 (function (global){
 var dispatchEvent = require('./dispatch-event');
 var initializeViews = require('./initialize-views');
@@ -115,7 +165,7 @@ if (global.doInitializeViews) {
 module.exports = ForwardEventView;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./dispatch-event":4,"./initialize-views":8}],7:[function(require,module,exports){
+},{"./dispatch-event":4,"./initialize-views":10}],9:[function(require,module,exports){
 Facekit = {};
 
 Facekit.initializeViews = require('./initialize-views');
@@ -124,11 +174,12 @@ Facekit.classNames = require('./class-names');
 Facekit.DismissView = require('./dismiss-view');
 Facekit.ForwardEventView = require('./forward-event-view');
 Facekit.ModalView = require('./modal-view');
+Facekit.DropdownView = require('./dropdown-view');
 Facekit.PanelView = require('./panel-view');
 Facekit.TabView = require('./tab-view');
 
 module.exports = Facekit;
-},{"./class-names":1,"./dismiss-view":3,"./forward-event-view":6,"./initialize-views":8,"./modal-view":10,"./panel-view":11,"./tab-view":14}],8:[function(require,module,exports){
+},{"./class-names":1,"./dismiss-view":3,"./dropdown-view":6,"./forward-event-view":8,"./initialize-views":10,"./modal-view":12,"./panel-view":13,"./tab-view":16}],10:[function(require,module,exports){
 var forEach = require('./for-each'),
     dispatchEvent = require('./dispatch-event');
 
@@ -178,7 +229,7 @@ function initializeViews(selector, viewClass, options) {
 }
 
 module.exports = initializeViews;
-},{"./dispatch-event":4,"./for-each":5}],9:[function(require,module,exports){
+},{"./dispatch-event":4,"./for-each":7}],11:[function(require,module,exports){
 function ModalControl(target, parent) {
   this.target = target;
   this.parent = parent;
@@ -207,7 +258,7 @@ ModalControl.prototype.deactivate = function() {
 };
 
 module.exports = ModalControl;
-},{}],10:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 (function (global){
 var initializeViews = require('../initialize-views'),
     ModalControl = require('./control');
@@ -238,7 +289,7 @@ if (global.doInitializeViews) {
 module.exports = ModalView;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../initialize-views":8,"./control":9}],11:[function(require,module,exports){
+},{"../initialize-views":10,"./control":11}],13:[function(require,module,exports){
 (function (global){
 var initializeViews = require('./initialize-views');
 var classNames = require('./class-names');
@@ -271,7 +322,7 @@ if (global.doInitializeViews) {
 module.exports = PanelView;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./class-names":1,"./initialize-views":8}],12:[function(require,module,exports){
+},{"./class-names":1,"./initialize-views":10}],14:[function(require,module,exports){
 function Pane(target, parent) {
   this.target = target;
   this.parent = parent;
@@ -282,7 +333,7 @@ Pane.prototype.render = function() {
 };
 
 module.exports = Pane;
-},{}],13:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 var forEach = require('../for-each');
 
 var Control = function TabViewControl(target, parent) {
@@ -344,7 +395,7 @@ Control.prototype.isActive = function(labelText) {
 
 module.exports = Control;
 
-},{"../for-each":5}],14:[function(require,module,exports){
+},{"../for-each":7}],16:[function(require,module,exports){
 (function (global){
 var forEach = require('../for-each'),
     CyclingView = require('../cycling-view'),
@@ -431,4 +482,4 @@ if (global.doInitializeViews) {
 module.exports = TabView;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../class-names":1,"../cycling-view":2,"../dispatch-event":4,"../for-each":5,"../initialize-views":8,"./Pane.js":12,"./control.js":13}]},{},[7]);
+},{"../class-names":1,"../cycling-view":2,"../dispatch-event":4,"../for-each":7,"../initialize-views":10,"./Pane.js":14,"./control.js":15}]},{},[9]);

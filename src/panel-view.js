@@ -1,10 +1,11 @@
-var initializeViews = require('./initialize-views');
-var classNames = require('./class-names');
+var initializeViews = require('./initialize-views'),
+    SelectorList = require('./selector-list'),
+    classNames = require('./class-names');
 
 function PanelView(target) {
   this.target = target;
-  this.toggleElement = this.target.querySelector('[data-panel-view-toggle]');
-  this.bodyElement = this.target.querySelector('[data-panel-view-body]');
+  this.toggleElement = this.target.querySelector(SelectorList['panel-view-toggle']);
+  this.bodyElement = this.target.querySelector(SelectorList['panel-view-body']);
 }
 
 PanelView.prototype.render= function() {
@@ -23,7 +24,7 @@ PanelView.prototype.toggle = function() {
 };
 
 if (global.doInitializeViews) {
-  initializeViews('[data-panel-view]', PanelView);
+  initializeViews(SelectorList['panel-view'], PanelView);
 }
 
 module.exports = PanelView;

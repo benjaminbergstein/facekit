@@ -1,6 +1,7 @@
-var forEach = require('../for-each'),
+var initializeViews = require('../initialize-views'),
+    SelectorList = require('../selector-list'),
+    forEach = require('../for-each'),
     CyclingView = require('../cycling-view'),
-    initializeViews = require('../initialize-views'),
     dispatchEvent = require('../dispatch-event'),
     classNames = require('../class-names');
 
@@ -17,8 +18,8 @@ TabView.prototype.render = function() {
   tabView = this;
   
   optionsForSubview = { parent: tabView };
-  this.panes = initializeViews('[data-tab-view-pane]', TabView.Pane, optionsForSubview);
-  this.tabViewControls = initializeViews('[data-tab-view-control]', TabView.Control, optionsForSubview);
+  this.panes = initializeViews(SelectorList['tab-view-pane'], TabView.Pane, optionsForSubview);
+  this.tabViewControls = initializeViews(SelectorList['tab-view-control'], TabView.Control, optionsForSubview);
   
   if (tabView.enableCycling !== undefined) {
     this.cyclingView = new CyclingView(this.tabViewControls);
@@ -73,10 +74,10 @@ TabView.prototype.resetControls = function(options) {
 };
 
 if (global.doInitializeViews) {
-  initializeViews('[data-tab-view]', TabView);
+  initializeViews(SelectorList['tab-view'], TabView);
   
   global.addEventListener('xhr:load', function() {
-    initializeViews('[data-tab-view]', TabView);
+    initializeViews(SelectorList['tab-view'], TabView);
   });
 }
 

@@ -1,6 +1,7 @@
 Facekit = {};
 
 Facekit.initializeViews = require('./initialize-views');
+Facekit.SelectorList = require('./selector-list');
 Facekit.classNames = require('./class-names');
 
 Facekit.DismissView = require('./dismiss-view');

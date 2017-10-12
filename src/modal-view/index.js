@@ -1,4 +1,5 @@
 var initializeViews = require('../initialize-views'),
+    SelectorList = require('../selector-list'),
     ModalControl = require('./control');
 
 function ModalView(target) {
@@ -8,8 +9,8 @@ function ModalView(target) {
 ModalView.prototype.render = function() {
   var subviewOptions;
   subviewOptions = { parent: this };
-  initializeViews('[data-modal-view-control]', ModalControl, subviewOptions);
-  this.subjects = initializeViews('[data-modal-view-subject]', ModalControl, subviewOptions);
+  initializeViews(SelectorList['modal-view-control'], ModalControl, subviewOptions);
+  this.subjects = initializeViews(SelectorList['modal-view-subject'], ModalControl, subviewOptions);
 };
 
 ModalView.prototype.activate = function() {
@@ -21,7 +22,7 @@ ModalView.prototype.deactivate = function() {
 };
 
 if (global.doInitializeViews) {
-  initializeViews('[data-modal-view]', ModalView);
+  initializeViews(SelectorList['modal-view'], ModalView);
 }
 
 module.exports = ModalView;

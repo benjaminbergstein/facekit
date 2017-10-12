@@ -26,7 +26,9 @@ CyclingView.prototype.advance = function(targetItem, numberToAdvance) {
 module.exports = CyclingView;
 },{}],3:[function(require,module,exports){
 (function (global){
-var initializeViews = require('./initialize-views');
+var initializeViews = require('./initialize-views'),
+    SelectorList = require('./selector-list'),
+    classNames = require('./class-names');
 
 function Control(target, parent) {
   this.target = target;
@@ -48,21 +50,21 @@ function DismissView(target) {
 
 DismissView.prototype.render = function() {
   optionsForSubview = { parent: this };
-  this.controls = initializeViews('[data-dismiss-control]', Control, optionsForSubview);
+  this.controls = initializeViews(SelectorList['dismiss-control'], Control, optionsForSubview);
 };
 
 DismissView.prototype.dismiss = function() {
-  this.target.classList.add('is-hidden');
+  this.target.classList.add(classNames.hidden);
 };
 
 if (global.doInitializeViews) {
-  initializeViews('[data-dismiss-view]', DismissView);
+  initializeViews(SelectorList['dismiss-view'], DismissView);
 }
 
 module.exports = DismissView;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./initialize-views":10}],4:[function(require,module,exports){
+},{"./class-names":1,"./initialize-views":10,"./selector-list":14}],4:[function(require,module,exports){
 function dispatchEvent(target, eventType, options) {
   // CustomEvent is not available in phantomjs v1.9.8, and file uploads down work with v2+.
   if (typeof CustomEvent === 'function') {
@@ -169,6 +171,7 @@ module.exports = ForwardEventView;
 Facekit = {};
 
 Facekit.initializeViews = require('./initialize-views');
+Facekit.SelectorList = require('./selector-list');
 Facekit.classNames = require('./class-names');
 
 Facekit.DismissView = require('./dismiss-view');
@@ -179,7 +182,8 @@ Facekit.PanelView = require('./panel-view');
 Facekit.TabView = require('./tab-view');
 
 module.exports = Facekit;
-},{"./class-names":1,"./dismiss-view":3,"./dropdown-view":6,"./forward-event-view":8,"./initialize-views":10,"./modal-view":12,"./panel-view":13,"./tab-view":16}],10:[function(require,module,exports){
+
+},{"./class-names":1,"./dismiss-view":3,"./dropdown-view":6,"./forward-event-view":8,"./initialize-views":10,"./modal-view":12,"./panel-view":13,"./selector-list":14,"./tab-view":17}],10:[function(require,module,exports){
 var forEach = require('./for-each'),
     dispatchEvent = require('./dispatch-event');
 
@@ -230,6 +234,8 @@ function initializeViews(selector, viewClass, options) {
 
 module.exports = initializeViews;
 },{"./dispatch-event":4,"./for-each":7}],11:[function(require,module,exports){
+var classNames = require('../class-names');
+
 function ModalControl(target, parent) {
   this.target = target;
   this.parent = parent;
@@ -250,17 +256,19 @@ ModalControl.prototype.render = function() {
 };
 
 ModalControl.prototype.activate = function() {
-  this.target.classList.add('is-active');
+  this.target.classList.add(classNames.active);
 };
 
 ModalControl.prototype.deactivate = function() {
-  this.target.classList.remove('is-active');
+  this.target.classList.remove(classNames.active);
 };
 
 module.exports = ModalControl;
-},{}],12:[function(require,module,exports){
+
+},{"../class-names":1}],12:[function(require,module,exports){
 (function (global){
 var initializeViews = require('../initialize-views'),
+    SelectorList = require('../selector-list'),
     ModalControl = require('./control');
 
 function ModalView(target) {
@@ -270,8 +278,8 @@ function ModalView(target) {
 ModalView.prototype.render = function() {
   var subviewOptions;
   subviewOptions = { parent: this };
-  initializeViews('[data-modal-view-control]', ModalControl, subviewOptions);
-  this.subjects = initializeViews('[data-modal-view-subject]', ModalControl, subviewOptions);
+  initializeViews(SelectorList['modal-view-control'], ModalControl, subviewOptions);
+  this.subjects = initializeViews(SelectorList['modal-view-subject'], ModalControl, subviewOptions);
 };
 
 ModalView.prototype.activate = function() {
@@ -283,21 +291,22 @@ ModalView.prototype.deactivate = function() {
 };
 
 if (global.doInitializeViews) {
-  initializeViews('[data-modal-view]', ModalView);
+  initializeViews(SelectorList['modal-view'], ModalView);
 }
 
 module.exports = ModalView;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../initialize-views":10,"./control":11}],13:[function(require,module,exports){
+},{"../initialize-views":10,"../selector-list":14,"./control":11}],13:[function(require,module,exports){
 (function (global){
-var initializeViews = require('./initialize-views');
-var classNames = require('./class-names');
+var initializeViews = require('./initialize-views'),
+    SelectorList = require('./selector-list'),
+    classNames = require('./class-names');
 
 function PanelView(target) {
   this.target = target;
-  this.toggleElement = this.target.querySelector('[data-panel-view-toggle]');
-  this.bodyElement = this.target.querySelector('[data-panel-view-body]');
+  this.toggleElement = this.target.querySelector(SelectorList['panel-view-toggle']);
+  this.bodyElement = this.target.querySelector(SelectorList['panel-view-body']);
 }
 
 PanelView.prototype.render= function() {
@@ -316,13 +325,35 @@ PanelView.prototype.toggle = function() {
 };
 
 if (global.doInitializeViews) {
-  initializeViews('[data-panel-view]', PanelView);
+  initializeViews(SelectorList['panel-view'], PanelView);
 }
 
 module.exports = PanelView;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./class-names":1,"./initialize-views":10}],14:[function(require,module,exports){
+},{"./class-names":1,"./initialize-views":10,"./selector-list":14}],14:[function(require,module,exports){
+var SelectorList;
+
+SelectorList = {
+  'modal-view': '[data-modal-view]',
+  'modal-view-control': '[data-modal-view-control]',
+  'modal-view-subject': '[data-modal-view-subject]',
+  
+  'dismiss-view': '[data-dismiss-view]',
+  'dismiss-control': '[data-dismiss-control]',
+  
+  'panel-view': '[data-panel-view]',
+  'panel-view-toggle': '[data-panel-view-toggle]',
+  'panel-view-body': '[data-panel-view-body]',
+  
+  'tab-view': '[data-tab-view]',
+  'tab-view-control': '[data-tab-view-control]',
+  'tab-view-pane': '[data-tab-view-pane]'
+};
+
+module.exports = SelectorList;
+
+},{}],15:[function(require,module,exports){
 function Pane(target, parent) {
   this.target = target;
   this.parent = parent;
@@ -333,7 +364,7 @@ Pane.prototype.render = function() {
 };
 
 module.exports = Pane;
-},{}],15:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
 var forEach = require('../for-each');
 
 var Control = function TabViewControl(target, parent) {
@@ -395,11 +426,12 @@ Control.prototype.isActive = function(labelText) {
 
 module.exports = Control;
 
-},{"../for-each":7}],16:[function(require,module,exports){
+},{"../for-each":7}],17:[function(require,module,exports){
 (function (global){
-var forEach = require('../for-each'),
+var initializeViews = require('../initialize-views'),
+    SelectorList = require('../selector-list'),
+    forEach = require('../for-each'),
     CyclingView = require('../cycling-view'),
-    initializeViews = require('../initialize-views'),
     dispatchEvent = require('../dispatch-event'),
     classNames = require('../class-names');
 
@@ -416,8 +448,8 @@ TabView.prototype.render = function() {
   tabView = this;
   
   optionsForSubview = { parent: tabView };
-  this.panes = initializeViews('[data-tab-view-pane]', TabView.Pane, optionsForSubview);
-  this.tabViewControls = initializeViews('[data-tab-view-control]', TabView.Control, optionsForSubview);
+  this.panes = initializeViews(SelectorList['tab-view-pane'], TabView.Pane, optionsForSubview);
+  this.tabViewControls = initializeViews(SelectorList['tab-view-control'], TabView.Control, optionsForSubview);
   
   if (tabView.enableCycling !== undefined) {
     this.cyclingView = new CyclingView(this.tabViewControls);
@@ -472,14 +504,14 @@ TabView.prototype.resetControls = function(options) {
 };
 
 if (global.doInitializeViews) {
-  initializeViews('[data-tab-view]', TabView);
+  initializeViews(SelectorList['tab-view'], TabView);
   
   global.addEventListener('xhr:load', function() {
-    initializeViews('[data-tab-view]', TabView);
+    initializeViews(SelectorList['tab-view'], TabView);
   });
 }
 
 module.exports = TabView;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../class-names":1,"../cycling-view":2,"../dispatch-event":4,"../for-each":7,"../initialize-views":10,"./Pane.js":14,"./control.js":15}]},{},[9]);
+},{"../class-names":1,"../cycling-view":2,"../dispatch-event":4,"../for-each":7,"../initialize-views":10,"../selector-list":14,"./Pane.js":15,"./control.js":16}]},{},[9]);

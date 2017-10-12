@@ -1,4 +1,6 @@
-var initializeViews = require('./initialize-views');
+var initializeViews = require('./initialize-views'),
+    SelectorList = require('./selector-list'),
+    classNames = require('./class-names');
 
 function Control(target, parent) {
   this.target = target;
@@ -20,15 +22,15 @@ function DismissView(target) {
 
 DismissView.prototype.render = function() {
   optionsForSubview = { parent: this };
-  this.controls = initializeViews('[data-dismiss-control]', Control, optionsForSubview);
+  this.controls = initializeViews(SelectorList['dismiss-control'], Control, optionsForSubview);
 };
 
 DismissView.prototype.dismiss = function() {
-  this.target.classList.add('is-hidden');
+  this.target.classList.add(classNames.hidden);
 };
 
 if (global.doInitializeViews) {
-  initializeViews('[data-dismiss-view]', DismissView);
+  initializeViews(SelectorList['dismiss-view'], DismissView);
 }
 
 module.exports = DismissView;

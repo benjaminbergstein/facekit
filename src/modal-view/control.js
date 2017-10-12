@@ -1,3 +1,5 @@
+var classNames = require('../class-names');
+
 function ModalControl(target, parent) {
   this.target = target;
   this.parent = parent;
@@ -18,11 +20,11 @@ ModalControl.prototype.render = function() {
 };
 
 ModalControl.prototype.activate = function() {
-  this.target.classList.add('is-active');
+  this.target.classList.add(classNames.active);
 };
 
 ModalControl.prototype.deactivate = function() {
-  this.target.classList.remove('is-active');
+  this.target.classList.remove(classNames.active);
 };
 
 module.exports = ModalControl;

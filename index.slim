@@ -6,7 +6,7 @@ html
     link href="css/github.css" type="text/css" rel="stylesheet"
     link href="css/style.css" type="text/css" rel="stylesheet"
 
-  body data-tab-view=true
+  body data-tab-view=true data-context-view=true
     section.hero.is-light
       .hero-body
         .container
@@ -27,22 +27,21 @@ html
         .container
           .tabs.is-boxed
             ul
-              li.is-active data-tab-view-control=true
+              li.is-active data-tab-view-control=true data-set-context='basic'
                 a href='javascript:void(0)' Toggled Panel
-              li data-tab-view-control=true
+              li data-tab-view-control=true data-set-context='basic'
                 a href='javascript:void(0)' Basic Tabs
-              li data-tab-view-control=true
+              li data-tab-view-control=true data-set-context='basic'
                 a href='javascript:void(0)' Dismiss
-              li data-tab-view-control=true
+              li data-tab-view-control=true data-set-context='basic'
                 a href='javascript:void(0)' Modal
-              li data-tab-view-control=true
+              li data-tab-view-control=true data-set-context='basic'
                 a href='javascript:void(0)' Dropdown
-              li data-tab-view-control=true
+              li data-tab-view-control=true data-set-context='advanced'
                 a href='javascript:void(0)' Advanced Features
 
-    .container.is-fluid
-      section.section
-
+    .container-fluid
+      section.section data-context='basic'
         div data-tab-view-pane=true data-controlled-by='Toggled Panel'
           == example do
             .panel data-panel-view=true
@@ -111,15 +110,15 @@ html
                   a href="javascript:void(0)" class="dropdown-item"
                     ' Dropdown Content
 
-        .is-hidden data-tab-view-pane=true data-controlled-by='Advanced Features'
-          div data-tab-view=true
-            .tabs
-              ul
-                li.is-active data-tab-view-control=true
-                  a href='javascript:void(0)' Contexts
-                li data-tab-view-control=true
-                  a href='javascript:void(0)' Event Forwards
+      .is-hidden data-tab-view-pane=true data-controlled-by='Advanced Features'
+        div data-tab-view=true
+          nav.navbar.has-shadow
+            .container
+              .navbar-tabs
+                a.navbar-item.is-tab.is-active data-tab-view-control=true href='javascript:void(0)' Contexts
+                a.navbar-item.is-tab data-tab-view-control=true Event Forwards
 
+          section.section
             div data-tab-view-pane=true data-controlled-by='Contexts'
               == example do
                 div data-context-view=true
@@ -130,7 +129,7 @@ html
                     ' An important message about the auxiliary action.
 
                   .content
-                    p This text will remain here no matter what
+                    p This text will remain here for both <span class='tag'>Main</span> and <span class='tag'>Auxiliary</span> contexts.
 
                   .box
                     div data-context='main'
@@ -158,6 +157,7 @@ html
                       i.fa.fa-refresh
 
                     span reset
+
             .is-hidden data-tab-view-pane=true data-controlled-by='Event Forwards'
               == example do
                 div data-tab-view=true data-enable-cycling=true

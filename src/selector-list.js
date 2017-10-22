@@ -14,7 +14,13 @@ SelectorList = {
   
   'tab-view': '[data-tab-view]',
   'tab-view-control': '[data-tab-view-control]',
-  'tab-view-pane': '[data-tab-view-pane]'
+  'tab-view-pane': '[data-tab-view-pane]',
+  
+  'context-view': '[data-context-view]',
+  'context-view-responder': '[data-context]',
+  'context-view-responder-dataset-key': 'context',
+  'context-view-control': '[data-set-context]',
+  'context-view-control-dataset-key': 'setContext'
 };
 
 module.exports = SelectorList;

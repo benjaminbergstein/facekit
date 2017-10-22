@@ -9,6 +9,102 @@ classNames = {
 module = classNames;
 
 },{}],2:[function(require,module,exports){
+var SelectorList = require('../selector-list');
+
+function Control(target, parent) {
+  this.target = target;
+  this.parent = parent;
+}
+
+Control.prototype.render = function() {
+  var control, dataset, datasetKey;
+  
+  control = this;
+  dataset = control.target.dataset;
+  datasetKey = SelectorList['context-view-control-dataset-key'];
+  control.contextName = dataset[datasetKey];
+  
+  control.target.addEventListener('click', function() {
+    control.parent.setContext(control.contextName);
+  });
+};
+
+module.exports = Control;
+},{"../selector-list":17}],3:[function(require,module,exports){
+(function (global){
+var initializeViews = require('../initialize-views'),
+    SelectorList = require('../selector-list'),
+    forEach = require('../for-each');
+
+function ContextView(target) {
+  this.target = target;
+}
+
+ContextView.Control = require('./control');
+ContextView.Responder = require('./responder');
+
+ContextView.prototype.render = function() {
+  initializeViews(
+    SelectorList['context-view-control'],
+    ContextView.Control,
+    { parent: this }
+  );
+  
+  this.responders = initializeViews(
+    SelectorList['context-view-responder'],
+    ContextView.Responder,
+    { parent: this }
+  );
+};
+
+ContextView.prototype.setContext = function(contextName) {
+  forEach(this.responders, function(responder) {
+    responder.toggle(contextName);
+  });
+};
+
+if (global.doInitializeViews) {
+  initializeViews(
+    SelectorList['context-view'],
+    ContextView
+  );
+}
+
+module.exports = ContextView;
+
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{"../for-each":10,"../initialize-views":13,"../selector-list":17,"./control":2,"./responder":4}],4:[function(require,module,exports){
+var SelectorList = require('../selector-list'),
+    classNames = require('../class-names');
+
+function ContextViewResponder(target, parent) {
+  this.target = target;
+  this.parent = parent;
+}
+
+ContextViewResponder.prototype.render = function() {
+  var responder, dataset, datasetKey;
+  
+  responder = this;
+  dataset = responder.target.dataset;
+  datasetKey = SelectorList['context-view-responder-dataset-key'];
+  responder.contextName = dataset[datasetKey];
+};
+
+ContextViewResponder.prototype.toggle = function(contextName) {
+  var classList;
+  
+  classList = this.target.classList;
+  
+  if (this.contextName === contextName) {
+    classList.remove(classNames['hidden']);
+  } else {
+    classList.add(classNames['hidden']);
+  }
+};
+
+module.exports = ContextViewResponder;
+},{"../class-names":1,"../selector-list":17}],5:[function(require,module,exports){
 function CyclingView(items) {
   this.items = items;
 }
@@ -24,7 +120,7 @@ CyclingView.prototype.advance = function(targetItem, numberToAdvance) {
 };
 
 module.exports = CyclingView;
-},{}],3:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 (function (global){
 var initializeViews = require('./initialize-views'),
     SelectorList = require('./selector-list'),
@@ -64,7 +160,7 @@ if (global.doInitializeViews) {
 module.exports = DismissView;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./class-names":1,"./initialize-views":10,"./selector-list":14}],4:[function(require,module,exports){
+},{"./class-names":1,"./initialize-views":13,"./selector-list":17}],7:[function(require,module,exports){
 function dispatchEvent(target, eventType, options) {
   // CustomEvent is not available in phantomjs v1.9.8, and file uploads down work with v2+.
   if (typeof CustomEvent === 'function') {
@@ -79,7 +175,7 @@ function dispatchEvent(target, eventType, options) {
 
 module.exports = dispatchEvent;
 
-},{}],5:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 function Control(target, parent) {
   this.target = target;
   this.parent = parent;
@@ -95,7 +191,7 @@ Control.prototype.render = function() {
 
 module.exports = Control;
 
-},{}],6:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 (function (global){
 var initializeViews = require('../initialize-views'),
     classNames = require('../class-names');
@@ -129,7 +225,7 @@ if (global.doInitializeViews) {
 module.exports = DropdownView;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../class-names":1,"../initialize-views":10,"./control":5}],7:[function(require,module,exports){
+},{"../class-names":1,"../initialize-views":13,"./control":8}],10:[function(require,module,exports){
 function forEach(collection, callback) {
   var i, ii;
   for (i = 0, ii = collection.length; i < ii; i++) {
@@ -139,7 +235,7 @@ function forEach(collection, callback) {
 
 module.exports = forEach;
 
-},{}],8:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 (function (global){
 var dispatchEvent = require('./dispatch-event');
 var initializeViews = require('./initialize-views');
@@ -167,13 +263,14 @@ if (global.doInitializeViews) {
 module.exports = ForwardEventView;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./dispatch-event":4,"./initialize-views":10}],9:[function(require,module,exports){
+},{"./dispatch-event":7,"./initialize-views":13}],12:[function(require,module,exports){
 Facekit = {};
 
 Facekit.initializeViews = require('./initialize-views');
 Facekit.SelectorList = require('./selector-list');
 Facekit.classNames = require('./class-names');
 
+Facekit.ContextView = require('./context-view');
 Facekit.DismissView = require('./dismiss-view');
 Facekit.ForwardEventView = require('./forward-event-view');
 Facekit.ModalView = require('./modal-view');
@@ -183,7 +280,7 @@ Facekit.TabView = require('./tab-view');
 
 module.exports = Facekit;
 
-},{"./class-names":1,"./dismiss-view":3,"./dropdown-view":6,"./forward-event-view":8,"./initialize-views":10,"./modal-view":12,"./panel-view":13,"./selector-list":14,"./tab-view":17}],10:[function(require,module,exports){
+},{"./class-names":1,"./context-view":3,"./dismiss-view":6,"./dropdown-view":9,"./forward-event-view":11,"./initialize-views":13,"./modal-view":15,"./panel-view":16,"./selector-list":17,"./tab-view":20}],13:[function(require,module,exports){
 var forEach = require('./for-each'),
     dispatchEvent = require('./dispatch-event');
 
@@ -233,7 +330,7 @@ function initializeViews(selector, viewClass, options) {
 }
 
 module.exports = initializeViews;
-},{"./dispatch-event":4,"./for-each":7}],11:[function(require,module,exports){
+},{"./dispatch-event":7,"./for-each":10}],14:[function(require,module,exports){
 var classNames = require('../class-names');
 
 function ModalControl(target, parent) {
@@ -265,7 +362,7 @@ ModalControl.prototype.deactivate = function() {
 
 module.exports = ModalControl;
 
-},{"../class-names":1}],12:[function(require,module,exports){
+},{"../class-names":1}],15:[function(require,module,exports){
 (function (global){
 var initializeViews = require('../initialize-views'),
     SelectorList = require('../selector-list'),
@@ -297,7 +394,7 @@ if (global.doInitializeViews) {
 module.exports = ModalView;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../initialize-views":10,"../selector-list":14,"./control":11}],13:[function(require,module,exports){
+},{"../initialize-views":13,"../selector-list":17,"./control":14}],16:[function(require,module,exports){
 (function (global){
 var initializeViews = require('./initialize-views'),
     SelectorList = require('./selector-list'),
@@ -331,7 +428,7 @@ if (global.doInitializeViews) {
 module.exports = PanelView;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./class-names":1,"./initialize-views":10,"./selector-list":14}],14:[function(require,module,exports){
+},{"./class-names":1,"./initialize-views":13,"./selector-list":17}],17:[function(require,module,exports){
 var SelectorList;
 
 SelectorList = {
@@ -348,12 +445,18 @@ SelectorList = {
   
   'tab-view': '[data-tab-view]',
   'tab-view-control': '[data-tab-view-control]',
-  'tab-view-pane': '[data-tab-view-pane]'
+  'tab-view-pane': '[data-tab-view-pane]',
+  
+  'context-view': '[data-context-view]',
+  'context-view-responder': '[data-context]',
+  'context-view-responder-dataset-key': 'context',
+  'context-view-control': '[data-set-context]',
+  'context-view-control-dataset-key': 'setContext'
 };
 
 module.exports = SelectorList;
 
-},{}],15:[function(require,module,exports){
+},{}],18:[function(require,module,exports){
 function Pane(target, parent) {
   this.target = target;
   this.parent = parent;
@@ -364,7 +467,7 @@ Pane.prototype.render = function() {
 };
 
 module.exports = Pane;
-},{}],16:[function(require,module,exports){
+},{}],19:[function(require,module,exports){
 var forEach = require('../for-each');
 
 var Control = function TabViewControl(target, parent) {
@@ -426,7 +529,7 @@ Control.prototype.isActive = function(labelText) {
 
 module.exports = Control;
 
-},{"../for-each":7}],17:[function(require,module,exports){
+},{"../for-each":10}],20:[function(require,module,exports){
 (function (global){
 var initializeViews = require('../initialize-views'),
     SelectorList = require('../selector-list'),
@@ -514,4 +617,4 @@ if (global.doInitializeViews) {
 module.exports = TabView;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../class-names":1,"../cycling-view":2,"../dispatch-event":4,"../for-each":7,"../initialize-views":10,"../selector-list":14,"./Pane.js":15,"./control.js":16}]},{},[9]);
+},{"../class-names":1,"../cycling-view":5,"../dispatch-event":7,"../for-each":10,"../initialize-views":13,"../selector-list":17,"./Pane.js":18,"./control.js":19}]},{},[12]);

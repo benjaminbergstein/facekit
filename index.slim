@@ -38,7 +38,7 @@ html
               li data-tab-view-control=true
                 a href='javascript:void(0)' Dropdown
               li data-tab-view-control=true
-                a href='javascript:void(0)' Sidebar Tabs
+                a href='javascript:void(0)' Advanced Features
 
     .container.is-fluid
       section.section
@@ -97,27 +97,6 @@ html
               button.delete data-dismiss-control=true
               ' Notification Body
 
-        .is-hidden data-tab-view-pane=true data-controlled-by='Sidebar Tabs'
-          == example do
-            div data-tab-view=true data-enable-cycling=true
-              .columns
-                .column.is-4
-                  .panel
-                    .panel-heading Sidebar
-                    a.panel-block.is-active data-tab-view-control=true data-forward-event='focus => click' href='javascript:void(0)' Basics
-                    a.panel-block data-tab-view-control=true data-forward-event='focus => click' href='javascript:void(0)' Advanced
-                    a.panel-block data-tab-view-control=true data-forward-event='focus => click' href='javascript:void(0)' Really Advanced
-
-                .column
-                  div data-tab-view-pane=true data-controlled-by='Basics'
-                    ' Click on the "Advanced" tab to the left!
-
-                  .is-hidden data-tab-view-pane=true data-controlled-by='Advanced'
-                    ' Now press the down key!
-
-                  .is-hidden data-tab-view-pane=true data-controlled-by='Really Advanced'
-                    ' Press the down key again if this is too advanced for you.
-
         .is-hidden data-tab-view-pane=true data-controlled-by='Dropdown'
           == example do
             div class="dropdown" data-dropdown-view=""
@@ -131,6 +110,74 @@ html
                 div class="dropdown-content"
                   a href="javascript:void(0)" class="dropdown-item"
                     ' Dropdown Content
+
+        .is-hidden data-tab-view-pane=true data-controlled-by='Advanced Features'
+          div data-tab-view=true
+            .tabs
+              ul
+                li.is-active data-tab-view-control=true
+                  a href='javascript:void(0)' Contexts
+                li data-tab-view-control=true
+                  a href='javascript:void(0)' Event Forwards
+
+            div data-tab-view-pane=true data-controlled-by='Contexts'
+              == example do
+                div data-context-view=true
+                  h1.title.is-5 data-context='main' Main
+                  h1.title.is-5.is-hidden data-context='auxiliary' Auxiliary
+
+                  .is-hidden.notification.is-info data-context='auxiliary'
+                    ' An important message about the auxiliary action.
+
+                  .content
+                    p This text will remain here no matter what
+
+                  .box
+                    div data-context='main'
+                      ' Here is the location of the main content
+
+                    .is-hidden data-context='auxiliary'
+                      h6.subtitle Contact
+
+                      .field
+                        label.label Name
+                        .control
+                          input.input
+
+                  hr
+
+                  div data-context='main'
+                    button.button.is-info data-set-context='auxiliary' Auxiliary Action
+
+                    ' &nbsp;&nbsp;&nbsp;&nbsp;
+                    span.tag data-context='main'
+                      ' &larr; Click!
+
+                  button.button.is-hidden data-context='auxiliary' data-set-context='main'
+                    span.icon
+                      i.fa.fa-refresh
+
+                    span reset
+            .is-hidden data-tab-view-pane=true data-controlled-by='Event Forwards'
+              == example do
+                div data-tab-view=true data-enable-cycling=true
+                  .columns
+                    .column.is-4
+                      .panel
+                        .panel-heading Sidebar
+                        a.panel-block.is-active data-tab-view-control=true data-forward-event='focus => click' href='javascript:void(0)' Basics
+                        a.panel-block data-tab-view-control=true data-forward-event='focus => click' href='javascript:void(0)' Advanced
+                        a.panel-block data-tab-view-control=true data-forward-event='focus => click' href='javascript:void(0)' Really Advanced
+
+                    .column
+                      div data-tab-view-pane=true data-controlled-by='Basics'
+                        ' Click on the "Advanced" tab to the left!
+
+                      .is-hidden data-tab-view-pane=true data-controlled-by='Advanced'
+                        ' Now press the down key!
+
+                      .is-hidden data-tab-view-pane=true data-controlled-by='Really Advanced'
+                        ' Press the down key again if this is too advanced for you.
 
     javascript:
       window.doInitializeViews = true;

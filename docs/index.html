@@ -48,7 +48,7 @@
                 <a href="javascript:void(0)">Dropdown</a>
               </li>
               <li data-tab-view-control="">
-                <a href="javascript:void(0)">Sidebar Tabs</a>
+                <a href="javascript:void(0)">Advanced Features</a>
               </li>
             </ul>
           </div>
@@ -189,30 +189,140 @@
   &lt;button class="delete" data-dismiss-control&gt;&lt;/button&gt;Notification Body 
 &lt;/div&gt;</code></pre></div></div></div>
         </div>
-        <div class="is-hidden" data-controlled-by="Sidebar Tabs" data-tab-view-pane=""><div class='columns'><div class='column is-half'><div><span class='tag is-primary' style="position: relative; top: 3px; left: 8px">Example</span></div><div class='box'><div>
-          <div data-enable-cycling="" data-tab-view="">
-            <div class="columns">
-              <div class="column is-4">
-                <div class="panel">
-                  <div class="panel-heading">
-                    Sidebar
-                  </div>
-                  <a class="panel-block is-active" data-forward-event="focus =&gt; click" data-tab-view-control="" href="javascript:void(0)">Basics</a><a class="panel-block" data-forward-event="focus =&gt; click" data-tab-view-control="" href="javascript:void(0)">Advanced</a><a class="panel-block" data-forward-event="focus =&gt; click" data-tab-view-control="" href="javascript:void(0)">Really Advanced</a>
-                </div>
-              </div>
-              <div class="column">
-                <div data-controlled-by="Basics" data-tab-view-pane="">
-                  Click on the "Advanced" tab to the left! 
-                </div>
-                <div class="is-hidden" data-controlled-by="Advanced" data-tab-view-pane="">
-                  Now press the down key! 
-                </div>
-                <div class="is-hidden" data-controlled-by="Really Advanced" data-tab-view-pane="">
-                  Press the down key again if this is too advanced for you. 
-                </div>
+        <div class="is-hidden" data-controlled-by="Dropdown" data-tab-view-pane=""><div class='columns'><div class='column is-half'><div><span class='tag is-primary' style="position: relative; top: 3px; left: 8px">Example</span></div><div class='box'><div>
+          <div class="dropdown" data-dropdown-view="">
+            <div class="dropdown-trigger" data-dropdown-view-control="">
+              <button aria-controls="dropdown-menu" aria-haspopup="true" class="button"><span>Toggle Dropdown</span><span class="icon is-small"><i aria-hidden="true" class="fa fa-angle-down"></i></span></button>
+            </div>
+            <div class="dropdown-menu" id="dropdown-menu" role="menu">
+              <div class="dropdown-content">
+                <a class="dropdown-item" href="javascript:void(0)">Dropdown Content </a>
               </div>
             </div>
           </div></div></div></div><div class='column is-half'><div><span class='tag' style="position: relative; top: 3px; left: 8px">Code</span></div><div><pre class='is-marginless'><code class='html is-paddingless is-marginless'>
+&lt;div class="dropdown" data-dropdown-view&gt;
+  &lt;div class="dropdown-trigger" data-dropdown-view-control&gt;
+    &lt;button aria-controls="dropdown-menu" aria-haspopup="true" class="button"&gt;&lt;span&gt;Toggle Dropdown&lt;/span&gt;&lt;span class="icon is-small"&gt;&lt;i aria-hidden="true" class="fa fa-angle-down"&gt;&lt;/i&gt;&lt;/span&gt;&lt;/button&gt;
+  &lt;/div&gt;
+  &lt;div class="dropdown-menu" id="dropdown-menu" role="menu"&gt;
+    &lt;div class="dropdown-content"&gt;
+      &lt;a class="dropdown-item" href="javascript:void(0)"&gt;Dropdown Content &lt;/a&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre></div></div></div>
+        </div>
+        <div class="is-hidden" data-controlled-by="Advanced Features" data-tab-view-pane="">
+          <div data-tab-view="">
+            <div class="tabs">
+              <ul>
+                <li class="is-active" data-tab-view-control="">
+                  <a href="javascript:void(0)">Contexts</a>
+                </li>
+                <li data-tab-view-control="">
+                  <a href="javascript:void(0)">Event Forwards</a>
+                </li>
+              </ul>
+            </div>
+            <div data-controlled-by="Contexts" data-tab-view-pane=""><div class='columns'><div class='column is-half'><div><span class='tag is-primary' style="position: relative; top: 3px; left: 8px">Example</span></div><div class='box'><div>
+              <div data-context-view="">
+                <h1 class="title is-5" data-context="main">
+                  Main
+                </h1>
+                <h1 class="title is-5 is-hidden" data-context="auxiliary">
+                  Auxiliary
+                </h1>
+                <div class="is-hidden notification is-info" data-context="auxiliary">
+                  An important message about the auxiliary action. 
+                </div>
+                <div class="content">
+                  <p>
+                    This text will remain here no matter what
+                  </p>
+                </div>
+                <div class="box">
+                  <div data-context="main">
+                    Here is the location of the main content 
+                  </div>
+                  <div class="is-hidden" data-context="auxiliary">
+                    <h6 class="subtitle">
+                      Contact
+                    </h6>
+                    <div class="field">
+                      <label class="label">Name</label>
+                      <div class="control">
+                        <input class="input" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <hr />
+                <div data-context="main">
+                  <button class="button is-info" data-set-context="auxiliary">Auxiliary Action</button>&nbsp;&nbsp;&nbsp;&nbsp; <span class="tag" data-context="main">&larr; Click! </span>
+                </div>
+                <button class="button is-hidden" data-context="auxiliary" data-set-context="main"><span class="icon"><i class="fa fa-refresh"></i></span><span>reset</span></button>
+              </div></div></div></div><div class='column is-half'><div><span class='tag' style="position: relative; top: 3px; left: 8px">Code</span></div><div><pre class='is-marginless'><code class='html is-paddingless is-marginless'>
+&lt;div data-context-view&gt;
+  &lt;h1 class="title is-5" data-context="main"&gt;
+    Main
+  &lt;/h1&gt;
+  &lt;h1 class="title is-5 is-hidden" data-context="auxiliary"&gt;
+    Auxiliary
+  &lt;/h1&gt;
+  &lt;div class="is-hidden notification is-info" data-context="auxiliary"&gt;
+    An important message about the auxiliary action. 
+  &lt;/div&gt;
+  &lt;div class="content"&gt;
+    &lt;p&gt;
+      This text will remain here no matter what
+    &lt;/p&gt;
+  &lt;/div&gt;
+  &lt;div class="box"&gt;
+    &lt;div data-context="main"&gt;
+      Here is the location of the main content 
+    &lt;/div&gt;
+    &lt;div class="is-hidden" data-context="auxiliary"&gt;
+      &lt;h6 class="subtitle"&gt;
+        Contact
+      &lt;/h6&gt;
+      &lt;div class="field"&gt;
+        &lt;label class="label"&gt;Name&lt;/label&gt;
+        &lt;div class="control"&gt;
+          &lt;input class="input" /&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;hr /&gt;
+  &lt;div data-context="main"&gt;
+    &lt;button class="button is-info" data-set-context="auxiliary"&gt;Auxiliary Action&lt;/button&gt;&nbsp;&nbsp;&nbsp;&nbsp; &lt;span class="tag" data-context="main"&gt;&larr; Click! &lt;/span&gt;
+  &lt;/div&gt;
+  &lt;button class="button is-hidden" data-context="auxiliary" data-set-context="main"&gt;&lt;span class="icon"&gt;&lt;i class="fa fa-refresh"&gt;&lt;/i&gt;&lt;/span&gt;&lt;span&gt;reset&lt;/span&gt;&lt;/button&gt;
+&lt;/div&gt;</code></pre></div></div></div>
+            </div>
+            <div class="is-hidden" data-controlled-by="Event Forwards" data-tab-view-pane=""><div class='columns'><div class='column is-half'><div><span class='tag is-primary' style="position: relative; top: 3px; left: 8px">Example</span></div><div class='box'><div>
+              <div data-enable-cycling="" data-tab-view="">
+                <div class="columns">
+                  <div class="column is-4">
+                    <div class="panel">
+                      <div class="panel-heading">
+                        Sidebar
+                      </div>
+                      <a class="panel-block is-active" data-forward-event="focus =&gt; click" data-tab-view-control="" href="javascript:void(0)">Basics</a><a class="panel-block" data-forward-event="focus =&gt; click" data-tab-view-control="" href="javascript:void(0)">Advanced</a><a class="panel-block" data-forward-event="focus =&gt; click" data-tab-view-control="" href="javascript:void(0)">Really Advanced</a>
+                    </div>
+                  </div>
+                  <div class="column">
+                    <div data-controlled-by="Basics" data-tab-view-pane="">
+                      Click on the "Advanced" tab to the left! 
+                    </div>
+                    <div class="is-hidden" data-controlled-by="Advanced" data-tab-view-pane="">
+                      Now press the down key! 
+                    </div>
+                    <div class="is-hidden" data-controlled-by="Really Advanced" data-tab-view-pane="">
+                      Press the down key again if this is too advanced for you. 
+                    </div>
+                  </div>
+                </div>
+              </div></div></div></div><div class='column is-half'><div><span class='tag' style="position: relative; top: 3px; left: 8px">Code</span></div><div><pre class='is-marginless'><code class='html is-paddingless is-marginless'>
 &lt;div data-enable-cycling data-tab-view&gt;
   &lt;div class="columns"&gt;
     &lt;div class="column is-4"&gt;
@@ -236,28 +346,8 @@
     &lt;/div&gt;
   &lt;/div&gt;
 &lt;/div&gt;</code></pre></div></div></div>
-        </div>
-        <div class="is-hidden" data-controlled-by="Dropdown" data-tab-view-pane=""><div class='columns'><div class='column is-half'><div><span class='tag is-primary' style="position: relative; top: 3px; left: 8px">Example</span></div><div class='box'><div>
-          <div class="dropdown" data-dropdown-view="">
-            <div class="dropdown-trigger" data-dropdown-view-control="">
-              <button aria-controls="dropdown-menu" aria-haspopup="true" class="button"><span>Toggle Dropdown</span><span class="icon is-small"><i aria-hidden="true" class="fa fa-angle-down"></i></span></button>
             </div>
-            <div class="dropdown-menu" id="dropdown-menu" role="menu">
-              <div class="dropdown-content">
-                <a class="dropdown-item" href="javascript:void(0)">Dropdown Content </a>
-              </div>
-            </div>
-          </div></div></div></div><div class='column is-half'><div><span class='tag' style="position: relative; top: 3px; left: 8px">Code</span></div><div><pre class='is-marginless'><code class='html is-paddingless is-marginless'>
-&lt;div class="dropdown" data-dropdown-view&gt;
-  &lt;div class="dropdown-trigger" data-dropdown-view-control&gt;
-    &lt;button aria-controls="dropdown-menu" aria-haspopup="true" class="button"&gt;&lt;span&gt;Toggle Dropdown&lt;/span&gt;&lt;span class="icon is-small"&gt;&lt;i aria-hidden="true" class="fa fa-angle-down"&gt;&lt;/i&gt;&lt;/span&gt;&lt;/button&gt;
-  &lt;/div&gt;
-  &lt;div class="dropdown-menu" id="dropdown-menu" role="menu"&gt;
-    &lt;div class="dropdown-content"&gt;
-      &lt;a class="dropdown-item" href="javascript:void(0)"&gt;Dropdown Content &lt;/a&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
-&lt;/div&gt;</code></pre></div></div></div>
+          </div>
         </div>
       </section>
     </div>

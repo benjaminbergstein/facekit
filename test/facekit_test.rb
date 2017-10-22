@@ -23,12 +23,6 @@ class FacekitTest < MiniTest::Test
     assert_equal(false, page.has_css?('.panel', text: 'This panel is toggleable. Click on the header to toggle.'))
   end
   
-  def within_example
-    within('.is-half', text: 'Example') do
-      yield
-    end
-  end
-
   def test_toggling_tabs
     visit '/'
     click_on 'Basic Tabs'
@@ -83,10 +77,57 @@ class FacekitTest < MiniTest::Test
     end
   end
   
+  def test_contexts
+    visit '/'
+    click_on 'Advanced Features'
+    
+    within_example do
+      # All the right things are showing at the beginning.
+      assert_equal(true, page.has_css?('.title', text: 'Main'))
+      assert_equal(true, page.has_css?('.button', text: 'Auxiliary'))
+      
+      assert_equal(false, page.has_css?('.title', text: 'Auxiliary'))
+      assert_equal(false, page.has_css?('.button', text: 'reset'))
+      
+      assert_equal(true, page.has_css?('p', text: 'remain here'))
+      
+      # Click the toggle.
+      click_on 'Auxiliary Action'
+      
+      # Everything switched.
+      assert_equal(false, page.has_css?('.title', text: 'Main'))
+      assert_equal(true, page.has_css?('.title', text: 'Auxiliary'))
+      
+      assert_equal(true, page.has_css?('.button', text: 'reset'))
+      assert_equal(false, page.has_css?('.button', text: 'Auxiliary'))
+      
+      assert_equal(true, page.has_css?('p', text: 'remain here'))
+      
+      # Reset
+      click_on 'reset'
+      
+      # Everything switched back.
+      assert_equal(true, page.has_css?('.title', text: 'Main'))
+      assert_equal(true, page.has_css?('.button', text: 'Auxiliary'))
+
+      assert_equal(false, page.has_css?('.title', text: 'Auxiliary'))
+      assert_equal(false, page.has_css?('.button', text: 'reset'))
+
+      assert_equal(true, page.has_css?('p', text: 'remain here'))
+    end
+  end
+  protected
+  
   def save_screen
     f = File.open('docs/screen.html', 'wb+')
     f.write(page.html)
     f.close
     `open http://localhost:9393/screen.html`
+  end
+  
+  def within_example
+    within('.is-half', text: 'Example') do
+      yield
+    end
   end
 end

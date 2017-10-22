@@ -79,7 +79,7 @@ class FacekitTest < MiniTest::Test
   
   def test_contexts
     visit '/'
-    click_on 'Advanced Features'
+    click_on 'Experimental Features'
     
     within_example do
       # All the right things are showing at the beginning.

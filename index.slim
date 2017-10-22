@@ -38,7 +38,10 @@ html
               li data-tab-view-control=true data-set-context='basic'
                 a href='javascript:void(0)' Dropdown
               li data-tab-view-control=true data-set-context='advanced'
-                a href='javascript:void(0)' Advanced Features
+                a href='javascript:void(0)'
+                  span.icon
+                    i.fa.fa-lightbulb-o
+                  span Experimental Features
 
     .container-fluid
       section.section data-context='basic'
@@ -110,7 +113,7 @@ html
                   a href="javascript:void(0)" class="dropdown-item"
                     ' Dropdown Content
 
-      .is-hidden data-tab-view-pane=true data-controlled-by='Advanced Features'
+      .is-hidden data-tab-view-pane=true data-controlled-by='Experimental Features'
         div data-tab-view=true
           nav.navbar.has-shadow
             .container
@@ -148,8 +151,9 @@ html
                   div data-context='main'
                     button.button.is-info data-set-context='auxiliary' Auxiliary Action
 
-                    ' &nbsp;&nbsp;&nbsp;&nbsp;
-                    span.tag data-context='main'
+                    span &nbsp;&nbsp;&nbsp;&nbsp;
+
+                    span.tag
                       ' &larr; Click!
 
                   button.button.is-hidden data-context='auxiliary' data-set-context='main'

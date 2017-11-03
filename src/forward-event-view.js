@@ -17,7 +17,7 @@ ForwardEventView.prototype.render = function() {
   });
 };
 
-if (global.doInitializeViews) {
+if (global.skipInitializeViews !== true) {
   initializeViews('[data-forward-event]', ForwardEventView);
 }
 

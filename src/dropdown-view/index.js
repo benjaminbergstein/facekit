@@ -23,7 +23,7 @@ DropdownView.prototype.toggle = function(force) {
   }
 };
 
-if (global.doInitializeViews) {
+if (global.skipInitializeViews !== true) {
   initializeViews('[data-dropdown-view]', DropdownView);
 }
 

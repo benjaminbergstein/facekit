@@ -21,7 +21,7 @@ ModalView.prototype.deactivate = function() {
   this.subjects[0].deactivate();
 };
 
-if (global.doInitializeViews) {
+if (global.skipInitializeViews !== true) {
   initializeViews(SelectorList['modal-view'], ModalView);
 }
 

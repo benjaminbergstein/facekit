@@ -1,5 +1,10 @@
 Facekit = {};
 
+Facekit.version = require('./version');
+
+Facekit.setFrameworkBulma = require('./frameworks/bulma');
+Facekit.setFrameworkBootstrap = require('./frameworks/bootstrap');
+
 Facekit.initializeViews = require('./initialize-views');
 Facekit.SelectorList = require('./selector-list');
 Facekit.classNames = require('./class-names');
@@ -11,5 +16,7 @@ Facekit.ModalView = require('./modal-view');
 Facekit.DropdownView = require('./dropdown-view');
 Facekit.PanelView = require('./panel-view');
 Facekit.TabView = require('./tab-view');
+
+Facekit.setFrameworkBulma();
 
 module.exports = Facekit;

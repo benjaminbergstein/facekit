@@ -73,7 +73,7 @@ TabView.prototype.resetControls = function(options) {
   });
 };
 
-if (global.doInitializeViews) {
+if (global.skipInitializeViews !== true) {
   initializeViews(SelectorList['tab-view'], TabView);
   
   global.addEventListener('xhr:load', function() {

@@ -1,8 +1,2 @@
-var classNames;
-
-classNames = {
-  hidden: 'hidden',
-  active: 'active'
-};
-
-module = classNames;
+const classNames = {};
+module.exports = classNames;

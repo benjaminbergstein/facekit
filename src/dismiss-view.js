@@ -29,7 +29,7 @@ DismissView.prototype.dismiss = function() {
   this.target.classList.add(classNames.hidden);
 };
 
-if (global.doInitializeViews) {
+if (global.skipInitializeViews !== true) {
   initializeViews(SelectorList['dismiss-view'], DismissView);
 }
 

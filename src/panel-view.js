@@ -23,7 +23,7 @@ PanelView.prototype.toggle = function() {
   this.bodyElement.classList.toggle(classNames.hidden)
 };
 
-if (global.doInitializeViews) {
+if (global.skipInitializeViews !== true) {
   initializeViews(SelectorList['panel-view'], PanelView);
 }
 

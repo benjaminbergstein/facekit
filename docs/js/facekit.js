@@ -1,12 +1,6 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-var classNames;
-
-classNames = {
-  hidden: 'hidden',
-  active: 'active'
-};
-
-module = classNames;
+const classNames = {};
+module.exports = classNames;
 
 },{}],2:[function(require,module,exports){
 var SelectorList = require('../selector-list');
@@ -30,7 +24,7 @@ Control.prototype.render = function() {
 };
 
 module.exports = Control;
-},{"../selector-list":17}],3:[function(require,module,exports){
+},{"../selector-list":19}],3:[function(require,module,exports){
 (function (global){
 var initializeViews = require('../initialize-views'),
     SelectorList = require('../selector-list'),
@@ -63,7 +57,7 @@ ContextView.prototype.setContext = function(contextName) {
   });
 };
 
-if (global.doInitializeViews) {
+if (global.skipInitializeViews !== true) {
   initializeViews(
     SelectorList['context-view'],
     ContextView
@@ -73,7 +67,7 @@ if (global.doInitializeViews) {
 module.exports = ContextView;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../for-each":10,"../initialize-views":13,"../selector-list":17,"./control":2,"./responder":4}],4:[function(require,module,exports){
+},{"../for-each":10,"../initialize-views":15,"../selector-list":19,"./control":2,"./responder":4}],4:[function(require,module,exports){
 var SelectorList = require('../selector-list'),
     classNames = require('../class-names');
 
@@ -104,7 +98,7 @@ ContextViewResponder.prototype.toggle = function(contextName) {
 };
 
 module.exports = ContextViewResponder;
-},{"../class-names":1,"../selector-list":17}],5:[function(require,module,exports){
+},{"../class-names":1,"../selector-list":19}],5:[function(require,module,exports){
 function CyclingView(items) {
   this.items = items;
 }
@@ -153,14 +147,14 @@ DismissView.prototype.dismiss = function() {
   this.target.classList.add(classNames.hidden);
 };
 
-if (global.doInitializeViews) {
+if (global.skipInitializeViews !== true) {
   initializeViews(SelectorList['dismiss-view'], DismissView);
 }
 
 module.exports = DismissView;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./class-names":1,"./initialize-views":13,"./selector-list":17}],7:[function(require,module,exports){
+},{"./class-names":1,"./initialize-views":15,"./selector-list":19}],7:[function(require,module,exports){
 function dispatchEvent(target, eventType, options) {
   // CustomEvent is not available in phantomjs v1.9.8, and file uploads down work with v2+.
   if (typeof CustomEvent === 'function') {
@@ -218,14 +212,14 @@ DropdownView.prototype.toggle = function(force) {
   }
 };
 
-if (global.doInitializeViews) {
+if (global.skipInitializeViews !== true) {
   initializeViews('[data-dropdown-view]', DropdownView);
 }
 
 module.exports = DropdownView;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../class-names":1,"../initialize-views":13,"./control":8}],10:[function(require,module,exports){
+},{"../class-names":1,"../initialize-views":15,"./control":8}],10:[function(require,module,exports){
 function forEach(collection, callback) {
   var i, ii;
   for (i = 0, ii = collection.length; i < ii; i++) {
@@ -256,15 +250,36 @@ ForwardEventView.prototype.render = function() {
   });
 };
 
-if (global.doInitializeViews) {
+if (global.skipInitializeViews !== true) {
   initializeViews('[data-forward-event]', ForwardEventView);
 }
 
 module.exports = ForwardEventView;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./dispatch-event":7,"./initialize-views":13}],12:[function(require,module,exports){
+},{"./dispatch-event":7,"./initialize-views":15}],12:[function(require,module,exports){
+const classNames = require('../class-names');
+
+module.exports = function() {
+  classNames.hidden = 'hidden';
+  classNames.active = 'active';
+};
+
+},{"../class-names":1}],13:[function(require,module,exports){
+const classNames = require('../class-names');
+
+module.exports = function() {
+  classNames.hidden = 'is-hidden';
+  classNames.active = 'is-active';
+};
+
+},{"../class-names":1}],14:[function(require,module,exports){
 Facekit = {};
+
+Facekit.version = require('./version');
+
+Facekit.setFrameworkBulma = require('./frameworks/bulma');
+Facekit.setFrameworkBootstrap = require('./frameworks/bootstrap');
 
 Facekit.initializeViews = require('./initialize-views');
 Facekit.SelectorList = require('./selector-list');
@@ -278,9 +293,11 @@ Facekit.DropdownView = require('./dropdown-view');
 Facekit.PanelView = require('./panel-view');
 Facekit.TabView = require('./tab-view');
 
+Facekit.setFrameworkBulma();
+
 module.exports = Facekit;
 
-},{"./class-names":1,"./context-view":3,"./dismiss-view":6,"./dropdown-view":9,"./forward-event-view":11,"./initialize-views":13,"./modal-view":15,"./panel-view":16,"./selector-list":17,"./tab-view":20}],13:[function(require,module,exports){
+},{"./class-names":1,"./context-view":3,"./dismiss-view":6,"./dropdown-view":9,"./forward-event-view":11,"./frameworks/bootstrap":12,"./frameworks/bulma":13,"./initialize-views":15,"./modal-view":17,"./panel-view":18,"./selector-list":19,"./tab-view":22,"./version":23}],15:[function(require,module,exports){
 var forEach = require('./for-each'),
     dispatchEvent = require('./dispatch-event');
 
@@ -330,7 +347,7 @@ function initializeViews(selector, viewClass, options) {
 }
 
 module.exports = initializeViews;
-},{"./dispatch-event":7,"./for-each":10}],14:[function(require,module,exports){
+},{"./dispatch-event":7,"./for-each":10}],16:[function(require,module,exports){
 var classNames = require('../class-names');
 
 function ModalControl(target, parent) {
@@ -362,7 +379,7 @@ ModalControl.prototype.deactivate = function() {
 
 module.exports = ModalControl;
 
-},{"../class-names":1}],15:[function(require,module,exports){
+},{"../class-names":1}],17:[function(require,module,exports){
 (function (global){
 var initializeViews = require('../initialize-views'),
     SelectorList = require('../selector-list'),
@@ -387,14 +404,14 @@ ModalView.prototype.deactivate = function() {
   this.subjects[0].deactivate();
 };
 
-if (global.doInitializeViews) {
+if (global.skipInitializeViews !== true) {
   initializeViews(SelectorList['modal-view'], ModalView);
 }
 
 module.exports = ModalView;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../initialize-views":13,"../selector-list":17,"./control":14}],16:[function(require,module,exports){
+},{"../initialize-views":15,"../selector-list":19,"./control":16}],18:[function(require,module,exports){
 (function (global){
 var initializeViews = require('./initialize-views'),
     SelectorList = require('./selector-list'),
@@ -421,14 +438,14 @@ PanelView.prototype.toggle = function() {
   this.bodyElement.classList.toggle(classNames.hidden)
 };
 
-if (global.doInitializeViews) {
+if (global.skipInitializeViews !== true) {
   initializeViews(SelectorList['panel-view'], PanelView);
 }
 
 module.exports = PanelView;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./class-names":1,"./initialize-views":13,"./selector-list":17}],17:[function(require,module,exports){
+},{"./class-names":1,"./initialize-views":15,"./selector-list":19}],19:[function(require,module,exports){
 var SelectorList;
 
 SelectorList = {
@@ -456,7 +473,7 @@ SelectorList = {
 
 module.exports = SelectorList;
 
-},{}],18:[function(require,module,exports){
+},{}],20:[function(require,module,exports){
 function Pane(target, parent) {
   this.target = target;
   this.parent = parent;
@@ -467,7 +484,7 @@ Pane.prototype.render = function() {
 };
 
 module.exports = Pane;
-},{}],19:[function(require,module,exports){
+},{}],21:[function(require,module,exports){
 var forEach = require('../for-each');
 
 var Control = function TabViewControl(target, parent) {
@@ -529,7 +546,7 @@ Control.prototype.isActive = function(labelText) {
 
 module.exports = Control;
 
-},{"../for-each":10}],20:[function(require,module,exports){
+},{"../for-each":10}],22:[function(require,module,exports){
 (function (global){
 var initializeViews = require('../initialize-views'),
     SelectorList = require('../selector-list'),
@@ -606,7 +623,7 @@ TabView.prototype.resetControls = function(options) {
   });
 };
 
-if (global.doInitializeViews) {
+if (global.skipInitializeViews !== true) {
   initializeViews(SelectorList['tab-view'], TabView);
   
   global.addEventListener('xhr:load', function() {
@@ -617,4 +634,7 @@ if (global.doInitializeViews) {
 module.exports = TabView;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../class-names":1,"../cycling-view":5,"../dispatch-event":7,"../for-each":10,"../initialize-views":13,"../selector-list":17,"./Pane.js":18,"./control.js":19}]},{},[12]);
+},{"../class-names":1,"../cycling-view":5,"../dispatch-event":7,"../for-each":10,"../initialize-views":15,"../selector-list":19,"./Pane.js":20,"./control.js":21}],23:[function(require,module,exports){
+module.exports = '0.0.1';
+
+},{}]},{},[14]);

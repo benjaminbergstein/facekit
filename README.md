@@ -6,7 +6,7 @@ Facekit is a front-end toolkit influenced by Rails's Unobtrusive Javascript (UJS
 
 ## Installation
 
-Download [dist/facekit.js](dist/facekit.js) and include it in your project.
+Download [dist/facekit.js](dist/facekit.js) and include it in your project. 
 
 ## Usage
 

@@ -29,7 +29,7 @@ ContextView.prototype.setContext = function(contextName) {
   });
 };
 
-if (global.doInitializeViews) {
+if (global.skipInitializeViews !== true) {
   initializeViews(
     SelectorList['context-view'],
     ContextView

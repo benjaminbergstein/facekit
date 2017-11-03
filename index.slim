@@ -28,11 +28,11 @@ html
           .tabs.is-boxed
             ul
               li.is-active data-tab-view-control=true data-set-context='basic'
-                a href='javascript:void(0)' Toggled Panel
+                a href='javascript:void(0)' Panel
               li data-tab-view-control=true data-set-context='basic'
-                a href='javascript:void(0)' Basic Tabs
+                a href='javascript:void(0)' Tabs
               li data-tab-view-control=true data-set-context='basic'
-                a href='javascript:void(0)' Dismiss
+                a href='javascript:void(0)' Flash
               li data-tab-view-control=true data-set-context='basic'
                 a href='javascript:void(0)' Modal
               li data-tab-view-control=true data-set-context='basic'
@@ -49,7 +49,7 @@ html
 
     .container-fluid
       section.section data-context='basic'
-        div data-tab-view-pane=true data-controlled-by='Toggled Panel'
+        div data-tab-view-pane=true data-controlled-by='Panel'
           == example do
             .panel data-panel-view=true
               .panel-heading.pointer data-panel-view-toggle=true
@@ -58,7 +58,7 @@ html
               .panel-block data-panel-view-body=true
                 p This panel is toggleable. Click on the header to toggle.
 
-        .is-hidden data-tab-view-pane=true data-controlled-by='Basic Tabs'
+        .is-hidden data-tab-view-pane=true data-controlled-by='Tabs'
           == example do
             div data-tab-view=true
               .tabs
@@ -91,7 +91,7 @@ html
 
                 button.modal-close.is-large data-modal-view-control="deactivate" aria-label="close"
 
-        .is-hidden data-tab-view-pane=true data-controlled-by='Dismiss'
+        .is-hidden data-tab-view-pane=true data-controlled-by='Flash'
           == example do
             .message data-dismiss-view=true
               .message-header

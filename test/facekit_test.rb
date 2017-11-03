@@ -25,7 +25,7 @@ class FacekitTest < MiniTest::Test
   
   def test_toggling_tabs
     visit '/'
-    click_on 'Basic Tabs'
+    click_on 'Tabs'
 
     within_example do
       assert_equal(true, page.has_css?('[data-tab-view-pane]', text: 'This is the the first tab. With any luck, it contains something very interesting.'))
@@ -41,7 +41,7 @@ class FacekitTest < MiniTest::Test
 
   def test_dismiss_message
     visit '/'
-    click_on 'Dismiss'
+    click_on 'Flash'
     
     within_example do
       within '.message' do

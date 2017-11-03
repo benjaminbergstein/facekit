@@ -59,12 +59,6 @@ TabView.prototype.resetControls = function(options) {
   activeControl = options.active;
   global.log = [];
   forEach(this.tabViewControls, function(control) {
-    global.log.push([
-      control.target.innerText,
-      activeControl.target.innerText,
-      control === activeControl
-    ]);
-    
     if (control === activeControl) {
       control.target.classList.add(classNames.active);
     } else {

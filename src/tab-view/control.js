@@ -6,7 +6,7 @@ var Control = function TabViewControl(target, parent) {
   tabViewControl = this;
   tabViewControl.target = target;
   tabViewControl.parent = parent;
-  tabViewControl.labelText = tabViewControl.target.innerText.trim();
+  tabViewControl.labelText = tabViewControl.target.innerText.replace(/\s+/g, ' ').trim();
   
   forEach(tabViewControl.parent.panes, function(pane) {
     var text;

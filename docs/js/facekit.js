@@ -591,7 +591,7 @@ var Control = function TabViewControl(target, parent) {
   tabViewControl = this;
   tabViewControl.target = target;
   tabViewControl.parent = parent;
-  tabViewControl.labelText = tabViewControl.target.innerText.trim();
+  tabViewControl.labelText = tabViewControl.target.innerText.replace(/\s+/g, ' ').trim();
   
   forEach(tabViewControl.parent.panes, function(pane) {
     var text;
@@ -707,12 +707,6 @@ TabView.prototype.resetControls = function(options) {
   activeControl = options.active;
   global.log = [];
   forEach(this.tabViewControls, function(control) {
-    global.log.push([
-      control.target.innerText,
-      activeControl.target.innerText,
-      control === activeControl
-    ]);
-    
     if (control === activeControl) {
       control.target.classList.add(classNames.active);
     } else {

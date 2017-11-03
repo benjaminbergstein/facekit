@@ -20,7 +20,13 @@ SelectorList = {
   'context-view-responder': '[data-context]',
   'context-view-responder-dataset-key': 'context',
   'context-view-control': '[data-set-context]',
-  'context-view-control-dataset-key': 'setContext'
+  'context-view-control-dataset-key': 'setContext',
+  
+  'load-view': '[data-load]',
+  'load-view-reload': '[data-reload]',
+  'load-view-dataset-key': 'load',
+  'load-view-load-every-dataset-key': 'loadEvery',
+  'load-view-reload-dataset-key': 'reload'
 };
 
 module.exports = SelectorList;

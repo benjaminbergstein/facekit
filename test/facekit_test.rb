@@ -116,6 +116,23 @@ class FacekitTest < MiniTest::Test
       assert_equal(true, page.has_css?('p', text: 'remain here'))
     end
   end
+  
+  def test_remote
+    visit '/'
+    click_on 'Remote'
+  
+    within_example do
+      assert_equal(true, page.has_content?('Loaded from /remote/basic.html!'))
+    end
+    
+    first('a', text: 'Form').click
+
+    within_example do
+      click_on 'Submit'
+      assert_equal(true, page.has_content?('Thanks for trying the demo! If you have actual feedback, please click here to send it to me!'))
+    end
+  end
+  
   protected
   
   def save_screen

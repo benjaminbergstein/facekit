@@ -37,6 +37,8 @@ html
                 a href='javascript:void(0)' Modal
               li data-tab-view-control=true data-set-context='basic'
                 a href='javascript:void(0)' Dropdown
+              li data-tab-view-control=true data-set-context='remote'
+                a href='javascript:void(0)' Remote
               li data-tab-view-control=true data-set-context='advanced'
                 a href='javascript:void(0)'
                   span.icon
@@ -112,6 +114,58 @@ html
                 div class="dropdown-content"
                   a href="javascript:void(0)" class="dropdown-item"
                     ' Dropdown Content
+
+      .is-hidden data-tab-view-pane=true data-controlled-by='Remote'
+        div data-tab-view=true
+          nav.navbar.has-shadow
+            .container
+              .navbar-tabs
+                a.navbar-item.is-tab.is-active data-tab-view-control=true href='javascript:void(0)' Basic
+                a.navbar-item.is-tab data-tab-view-control=true Form
+
+          section.section
+            div data-tab-view-pane=true data-controlled-by='Basic'
+              == example do
+                div data-load="remote/basic.html"
+                  span.icon.is-small
+                    i.fa.fa-circle-o-notch.fa-spin
+
+                  span &nbsp;Loading...
+
+            .is-hidden data-tab-view-pane=true data-controlled-by='Form'
+              == example do |context|
+                form.is-marginless action="remote/form.html" method="GET" data-load=""
+                  - if context == :example
+                    .notification
+                      p
+                        strong Tip:
+                        ' &nbsp;Forms with the
+                        strong.has-text-info data-load
+                        ' &nbsp;attribute will submit via XMLHttpRequest to the url of the form's
+                        strong.has-text-info action
+                        ' &nbsp;attribute via its
+                        strong.has-text-info method
+                        ' &nbsp;attribute.
+
+                  .field
+                    label.label Email Address
+                    .control
+                      input.input type="text" name="email"
+
+                  .field
+                    label.label Feedback
+                    .control
+                      textarea.input type="text" name="feedback"
+
+                  - if context == :example
+                    .notification.is-warning
+                      p
+                        strong Note:
+                        | &nbsp;This form is purely for demonstration purposes. It will not actually submit feedback.
+
+                  .field
+                    .control
+                      button.button Submit
 
       .is-hidden data-tab-view-pane=true data-controlled-by='Experimental Features'
         div data-tab-view=true

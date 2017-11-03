@@ -24,7 +24,7 @@ Control.prototype.render = function() {
 };
 
 module.exports = Control;
-},{"../selector-list":19}],3:[function(require,module,exports){
+},{"../selector-list":21}],3:[function(require,module,exports){
 (function (global){
 var initializeViews = require('../initialize-views'),
     SelectorList = require('../selector-list'),
@@ -67,7 +67,7 @@ if (global.skipInitializeViews !== true) {
 module.exports = ContextView;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../for-each":10,"../initialize-views":15,"../selector-list":19,"./control":2,"./responder":4}],4:[function(require,module,exports){
+},{"../for-each":10,"../initialize-views":15,"../selector-list":21,"./control":2,"./responder":4}],4:[function(require,module,exports){
 var SelectorList = require('../selector-list'),
     classNames = require('../class-names');
 
@@ -98,7 +98,7 @@ ContextViewResponder.prototype.toggle = function(contextName) {
 };
 
 module.exports = ContextViewResponder;
-},{"../class-names":1,"../selector-list":19}],5:[function(require,module,exports){
+},{"../class-names":1,"../selector-list":21}],5:[function(require,module,exports){
 function CyclingView(items) {
   this.items = items;
 }
@@ -154,7 +154,7 @@ if (global.skipInitializeViews !== true) {
 module.exports = DismissView;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./class-names":1,"./initialize-views":15,"./selector-list":19}],7:[function(require,module,exports){
+},{"./class-names":1,"./initialize-views":15,"./selector-list":21}],7:[function(require,module,exports){
 function dispatchEvent(target, eventType, options) {
   // CustomEvent is not available in phantomjs v1.9.8, and file uploads down work with v2+.
   if (typeof CustomEvent === 'function') {
@@ -287,9 +287,10 @@ Facekit.classNames = require('./class-names');
 
 Facekit.ContextView = require('./context-view');
 Facekit.DismissView = require('./dismiss-view');
-Facekit.ForwardEventView = require('./forward-event-view');
-Facekit.ModalView = require('./modal-view');
 Facekit.DropdownView = require('./dropdown-view');
+Facekit.ForwardEventView = require('./forward-event-view');
+Facekit.LoadView = require('./load-view');
+Facekit.ModalView = require('./modal-view');
 Facekit.PanelView = require('./panel-view');
 Facekit.TabView = require('./tab-view');
 
@@ -297,7 +298,7 @@ Facekit.setFrameworkBulma();
 
 module.exports = Facekit;
 
-},{"./class-names":1,"./context-view":3,"./dismiss-view":6,"./dropdown-view":9,"./forward-event-view":11,"./frameworks/bootstrap":12,"./frameworks/bulma":13,"./initialize-views":15,"./modal-view":17,"./panel-view":18,"./selector-list":19,"./tab-view":22,"./version":23}],15:[function(require,module,exports){
+},{"./class-names":1,"./context-view":3,"./dismiss-view":6,"./dropdown-view":9,"./forward-event-view":11,"./frameworks/bootstrap":12,"./frameworks/bulma":13,"./initialize-views":15,"./load-view":17,"./modal-view":19,"./panel-view":20,"./selector-list":21,"./tab-view":24,"./version":25}],15:[function(require,module,exports){
 var forEach = require('./for-each'),
     dispatchEvent = require('./dispatch-event');
 
@@ -348,6 +349,97 @@ function initializeViews(selector, viewClass, options) {
 
 module.exports = initializeViews;
 },{"./dispatch-event":7,"./for-each":10}],16:[function(require,module,exports){
+var SelectorList = require('../selector-list');
+
+function LoadViewControl(target, parent) {
+  this.target = target;
+  this.parent = parent;
+}
+
+LoadViewControl.prototype.render = function() {
+  var target, parent, datasetKey, reloadUrl;
+  
+  target = this.target;
+  parent = this.parent;
+  datasetKey = SelectorList['load-view-reload-dataset-key'];
+  reloadUrl = target.dataset[datasetKey];
+  
+  target.addEventListener('click', function () {
+    parent.url = reloadUrl;
+    parent.load();
+  });
+};
+
+module.exports = LoadViewControl;
+
+},{"../selector-list":21}],17:[function(require,module,exports){
+(function (global){
+var initializeViews = require('../initialize-views'),
+    SelectorList = require('../selector-list'),
+    xhr = require('../xhr'),
+    loadInnerHTML = require('../xhr/load-inner-html');
+
+function LoadView(target) {
+  this.target = target;
+  this.url = target.dataset[SelectorList['load-view-dataset-key']];
+  this.loadEvery = target.dataset[SelectorList['load-view-load-every-dataset-key']];
+  this.isForm = this.target.tagName === 'FORM';
+}
+
+LoadView.Control = require('./control');
+
+LoadView.prototype.render = function() {
+  var view, target;
+  
+  view = this;
+  target = view.target;
+  view.renderSubviews();
+  view.load();
+  
+  target.addEventListener('xhr:load', function() {
+    view.renderSubviews();
+  });
+  
+  target.addEventListener('submit', function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    
+    var formData;
+    
+    formData = new FormData(target);
+    
+    xhr(target.method || 'GET', target.action, formData, function(status, html, xhr) {
+      loadInnerHTML(target, html);
+    });
+  });
+};
+
+LoadView.prototype.renderSubviews = function() {
+  initializeViews(SelectorList['load-view-reload'], LoadView.Control, { parent: this });
+};
+
+LoadView.prototype.load = function() {
+  var view;
+  
+  view = this;
+  
+  if (view.url === "" && view.isForm) return;
+  
+  xhr('GET', view.url, undefined, function (status, html, xhr) {
+    loadInnerHTML(view.target, html);
+    
+    if (view.loadEvery) {
+      setTimeout(function() { view.load(); }, view.loadEvery);
+    }
+  });
+};
+
+if (global.skipInitializeViews !== true) {
+  initializeViews(SelectorList['load-view'], LoadView);
+}
+
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{"../initialize-views":15,"../selector-list":21,"../xhr":26,"../xhr/load-inner-html":27,"./control":16}],18:[function(require,module,exports){
 var classNames = require('../class-names');
 
 function ModalControl(target, parent) {
@@ -379,7 +471,7 @@ ModalControl.prototype.deactivate = function() {
 
 module.exports = ModalControl;
 
-},{"../class-names":1}],17:[function(require,module,exports){
+},{"../class-names":1}],19:[function(require,module,exports){
 (function (global){
 var initializeViews = require('../initialize-views'),
     SelectorList = require('../selector-list'),
@@ -411,7 +503,7 @@ if (global.skipInitializeViews !== true) {
 module.exports = ModalView;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../initialize-views":15,"../selector-list":19,"./control":16}],18:[function(require,module,exports){
+},{"../initialize-views":15,"../selector-list":21,"./control":18}],20:[function(require,module,exports){
 (function (global){
 var initializeViews = require('./initialize-views'),
     SelectorList = require('./selector-list'),
@@ -445,7 +537,7 @@ if (global.skipInitializeViews !== true) {
 module.exports = PanelView;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./class-names":1,"./initialize-views":15,"./selector-list":19}],19:[function(require,module,exports){
+},{"./class-names":1,"./initialize-views":15,"./selector-list":21}],21:[function(require,module,exports){
 var SelectorList;
 
 SelectorList = {
@@ -468,12 +560,18 @@ SelectorList = {
   'context-view-responder': '[data-context]',
   'context-view-responder-dataset-key': 'context',
   'context-view-control': '[data-set-context]',
-  'context-view-control-dataset-key': 'setContext'
+  'context-view-control-dataset-key': 'setContext',
+  
+  'load-view': '[data-load]',
+  'load-view-reload': '[data-reload]',
+  'load-view-dataset-key': 'load',
+  'load-view-load-every-dataset-key': 'loadEvery',
+  'load-view-reload-dataset-key': 'reload'
 };
 
 module.exports = SelectorList;
 
-},{}],20:[function(require,module,exports){
+},{}],22:[function(require,module,exports){
 function Pane(target, parent) {
   this.target = target;
   this.parent = parent;
@@ -484,7 +582,7 @@ Pane.prototype.render = function() {
 };
 
 module.exports = Pane;
-},{}],21:[function(require,module,exports){
+},{}],23:[function(require,module,exports){
 var forEach = require('../for-each');
 
 var Control = function TabViewControl(target, parent) {
@@ -546,7 +644,7 @@ Control.prototype.isActive = function(labelText) {
 
 module.exports = Control;
 
-},{"../for-each":10}],22:[function(require,module,exports){
+},{"../for-each":10}],24:[function(require,module,exports){
 (function (global){
 var initializeViews = require('../initialize-views'),
     SelectorList = require('../selector-list'),
@@ -634,7 +732,41 @@ if (global.skipInitializeViews !== true) {
 module.exports = TabView;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../class-names":1,"../cycling-view":5,"../dispatch-event":7,"../for-each":10,"../initialize-views":15,"../selector-list":19,"./Pane.js":20,"./control.js":21}],23:[function(require,module,exports){
+},{"../class-names":1,"../cycling-view":5,"../dispatch-event":7,"../for-each":10,"../initialize-views":15,"../selector-list":21,"./Pane.js":22,"./control.js":23}],25:[function(require,module,exports){
 module.exports = '0.0.1';
 
-},{}]},{},[14]);
+},{}],26:[function(require,module,exports){
+function xhr(method, url, data, callback) {
+  var xhr;
+  
+  if (arguments.callee.disabled) return;
+  
+  xhr = new XMLHttpRequest();
+  xhr.open(method, url);
+  xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+  xhr.addEventListener('readystatechange', function () {
+    if (xhr.readyState === XMLHttpRequest.DONE) {
+      callback(xhr.status, xhr.responseText, xhr);
+    }
+  });
+  
+  xhr.send(data);
+}
+
+module.exports = xhr;
+
+},{}],27:[function(require,module,exports){
+var dispatchEvent = require('../dispatch-event');
+
+function loadInnerHTML(target, html) {
+  var callback;
+  target.innerHTML = html;
+  loadCallback = target.dataset.loadCallback;
+  callback = eval(loadCallback);
+  if (typeof callback === 'function') { setTimeout(callback, 100); }
+  dispatchEvent(target, 'xhr:load', { bubbles: true });
+}
+
+
+module.exports = loadInnerHTML;
+},{"../dispatch-event":7}]},{},[14]);

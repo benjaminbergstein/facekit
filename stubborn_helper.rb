@@ -1,6 +1,6 @@
 def example
-  html = yield
-  escaped_html = html.gsub('<', '&lt;').gsub('>', '&gt;')
+  html = yield(:example)
+  escaped_html = yield(:code).gsub('<', '&lt;').gsub('>', '&gt;')
   whitespace = escaped_html.match(/\A\s+/).to_a.first
   escaped_html.gsub!("#{whitespace}", "\n")
   

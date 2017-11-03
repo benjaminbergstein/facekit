@@ -47,6 +47,9 @@
               <li data-set-context="basic" data-tab-view-control="">
                 <a href="javascript:void(0)">Dropdown</a>
               </li>
+              <li data-set-context="remote" data-tab-view-control="">
+                <a href="javascript:void(0)">Remote</a>
+              </li>
               <li data-set-context="advanced" data-tab-view-control="">
                 <a href="javascript:void(0)"><span class="icon"><i class="fa fa-lightbulb-o"></i></span><span>Experimental Features</span></a>
               </li>
@@ -212,6 +215,77 @@
 &lt;/div&gt;</code></pre></div></div></div>
         </div>
       </section>
+      <div class="is-hidden" data-controlled-by="Remote" data-tab-view-pane="">
+        <div data-tab-view="">
+          <nav class="navbar has-shadow">
+            <div class="container">
+              <div class="navbar-tabs">
+                <a class="navbar-item is-tab is-active" data-tab-view-control="" href="javascript:void(0)">Basic</a><a class="navbar-item is-tab" data-tab-view-control="">Form</a>
+              </div>
+            </div>
+          </nav>
+          <section class="section">
+            <div data-controlled-by="Basic" data-tab-view-pane=""><div class='columns'><div class='column is-half'><div><span class='tag is-primary' style="position: relative; top: 3px; left: 8px">Example</span></div><div class='box'><div>
+              <div data-load="remote/basic.html">
+                <span class="icon is-small"><i class="fa fa-circle-o-notch fa-spin"></i></span><span>&nbsp;Loading...</span>
+              </div></div></div></div><div class='column is-half'><div><span class='tag' style="position: relative; top: 3px; left: 8px">Code</span></div><div><pre class='is-marginless'><code class='html is-paddingless is-marginless'>
+&lt;div data-load="remote/basic.html"&gt;
+  &lt;span class="icon is-small"&gt;&lt;i class="fa fa-circle-o-notch fa-spin"&gt;&lt;/i&gt;&lt;/span&gt;&lt;span&gt;&nbsp;Loading...&lt;/span&gt;
+&lt;/div&gt;</code></pre></div></div></div>
+            </div>
+            <div class="is-hidden" data-controlled-by="Form" data-tab-view-pane=""><div class='columns'><div class='column is-half'><div><span class='tag is-primary' style="position: relative; top: 3px; left: 8px">Example</span></div><div class='box'><div>
+              <form action="remote/form.html" class="is-marginless" data-load="" method="GET">
+                <div class="notification">
+                  <p>
+                    <strong>Tip:</strong>&nbsp;Forms with the <strong class="has-text-info">data-load</strong>&nbsp;attribute will submit via XMLHttpRequest to the url of the form's <strong class="has-text-info">action</strong>&nbsp;attribute via its <strong class="has-text-info">method</strong>&nbsp;attribute. 
+                  </p>
+                </div>
+                <div class="field">
+                  <label class="label">Email Address</label>
+                  <div class="control">
+                    <input class="input" name="email" type="text" />
+                  </div>
+                </div>
+                <div class="field">
+                  <label class="label">Feedback</label>
+                  <div class="control">
+                    <textarea class="input" name="feedback" type="text"></textarea>
+                  </div>
+                </div>
+                <div class="notification is-warning">
+                  <p>
+                    <strong>Note:</strong>&nbsp;This form is purely for demonstration purposes. It will not actually submit feedback.
+                  </p>
+                </div>
+                <div class="field">
+                  <div class="control">
+                    <button class="button">Submit</button>
+                  </div>
+                </div>
+              </form></div></div></div><div class='column is-half'><div><span class='tag' style="position: relative; top: 3px; left: 8px">Code</span></div><div><pre class='is-marginless'><code class='html is-paddingless is-marginless'>
+&lt;form action="remote/form.html" class="is-marginless" data-load method="GET"&gt;
+  &lt;div class="field"&gt;
+    &lt;label class="label"&gt;Email Address&lt;/label&gt;
+    &lt;div class="control"&gt;
+      &lt;input class="input" name="email" type="text" /&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="field"&gt;
+    &lt;label class="label"&gt;Feedback&lt;/label&gt;
+    &lt;div class="control"&gt;
+      &lt;textarea class="input" name="feedback" type="text"&gt;&lt;/textarea&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="field"&gt;
+    &lt;div class="control"&gt;
+      &lt;button class="button"&gt;Submit&lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/form&gt;</code></pre></div></div></div>
+            </div>
+          </section>
+        </div>
+      </div>
       <div class="is-hidden" data-controlled-by="Experimental Features" data-tab-view-pane="">
         <div data-tab-view="">
           <nav class="navbar has-shadow">
